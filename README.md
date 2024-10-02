@@ -1,0 +1,2 @@
+# SyncBox
+ SyncBox - Smart Contact Management System SyncBox is a robust and user-friendly contact management system built using Spring Boot and Java. It enables users to efficiently store, organize, and manage their contacts with advanced features like searching, filtering, and categorizing. The project also includes secure data handling, ensuring that user information is safely managed. Perfect for personal or business use.
