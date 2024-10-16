@@ -12,5 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "syncbox": "file:"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
   }
 }
