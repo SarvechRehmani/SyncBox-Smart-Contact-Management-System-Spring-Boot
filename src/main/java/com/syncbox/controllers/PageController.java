@@ -10,4 +10,10 @@ public class PageController {
         System.out.println("Home Controller");
         return "home";
     }
+
+    @RequestMapping("/about")
+    public  String about(){
+        System.out.println("about Controller");
+        return "about";
+    }
 }

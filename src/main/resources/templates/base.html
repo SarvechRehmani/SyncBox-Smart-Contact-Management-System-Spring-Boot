@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="parent(content, title, script)"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,13 +12,19 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
     />
     <link rel="stylesheet" data-th-href="@{/css/output.css}" />
-    <title>Demo Page - Home</title>
+  
+    <title data-th-replace="${title}">SyncBox</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
-    <h1 class="text-red-400 text-4xl">Welcome to Home page</h1>
-    <p>lorem60</p>
+    <!-- HEADER -->
 
+    <!-- MAIN CONTENT -->
+    <section data-th-replace="${content}"></section>
+    
+    <!-- FOOTER -->
+
+    <!-- SCRIPT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    <th:blick data-th-replace="${script}"></th:block>
   </body>
 </html>
