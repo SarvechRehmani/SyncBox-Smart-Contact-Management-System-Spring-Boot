@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Sign Up | SyncBox</title>
+  </head>
+  <body>
+    <section id="content" class="my-3">
+      <div class="grid grid-cols-12">
+        <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-2"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-8">
+          <div
+            class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+          >
+            <div class="grid grid-cols-2">
+              <div class="col-span-2 md:col-span-1">
+                <h5
+                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                >
+                  Sign Up
+                </h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">
+                  Manage your contact using SyncBox and save in the cloud.
+                </p>
+              </div>
+              <div
+                class="hidden md:block col-span-1 border-l-2 border-gray-200 dark:border-gray-600"
+              >
+                <img src="/images/registerationPic.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script></script>
+  </body>
+</html>

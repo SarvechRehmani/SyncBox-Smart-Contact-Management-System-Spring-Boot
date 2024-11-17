@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html
+  class="light"
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   th:fragment="parent(content, title, script)"
@@ -7,24 +8,41 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- FLOWBIT -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
     />
+
+    <!-- FONT AWESOME CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <link rel="stylesheet" data-th-href="@{/css/output.css}" />
-  
+
     <title data-th-replace="${title}">SyncBox</title>
   </head>
-  <body>
+  <body class="dark:bg-gray-800 dark:text-white">
     <!-- HEADER -->
+    <div data-th-replace="~{commonFragments :: navbar}"></div>
 
     <!-- MAIN CONTENT -->
-    <section data-th-replace="${content}"></section>
-    
+    <div class="h-screen">
+      <section data-th-replace="${content}"></section>
+    </div>
+
     <!-- FOOTER -->
+    <div data-th-replace="~{commonFragments :: footer}"></div>
 
     <!-- SCRIPT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
-    <th:blick data-th-replace="${script}"></th:block>
+    <script th:src="@{'/js/script.js'}"></script>
+    <th:block data-th-replace="${script}"></th:block>
   </body>
 </html>
