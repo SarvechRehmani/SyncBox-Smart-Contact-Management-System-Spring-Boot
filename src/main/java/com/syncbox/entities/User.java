@@ -28,8 +28,8 @@ public class User {
     @Column(length = 10000, columnDefinition = "TEXT")
     private String profilePic;
     private boolean enabled = false;
-    private boolean emailVarified = false;
-    private boolean phoneVarified = false;
+    private boolean emailVerified = false;
+    private boolean phoneVerified = false;
 
     private String providerId;
     private Providers provider = Providers.SELF;
