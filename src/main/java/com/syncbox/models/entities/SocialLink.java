@@ -1,5 +1,6 @@
-package com.syncbox.entities;
+package com.syncbox.models.entities;
 
+import com.syncbox.models.entities.Contact;
 import jakarta.persistence.*;
 import lombok.*;
 

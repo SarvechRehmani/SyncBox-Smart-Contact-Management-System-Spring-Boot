@@ -24,7 +24,12 @@
                 <p class="font-normal text-gray-700 dark:text-gray-400">
                   Manage your contact using SyncBox and save in the cloud.
                 </p>
-                <form action="" class="pr-5 mt-5">
+                <form
+                  th:action="@{'/register'}"
+                  th:object="${userDto}"
+                  method="post"
+                  class="pr-5 mt-5"
+                >
                   <div class="mb-5">
                     <label
                       for="name"
@@ -34,6 +39,7 @@
                     <input
                       type="text"
                       id="name"
+                      th:field="*{name}"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                       placeholder="Enter name here."
                       required
@@ -48,6 +54,7 @@
                     <input
                       type="email"
                       id="email"
+                      th:field="*{email}"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                       placeholder="Enter email here."
                       required
@@ -66,6 +73,7 @@
                         <input
                           type="password"
                           id="password"
+                          th:field="*{password}"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                           placeholder="Enter password here."
                           required
@@ -83,10 +91,16 @@
                       <input
                         type="password"
                         id="confirmPassword"
+                        th:field="*{confirmPassword}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                         placeholder="Confirm password here."
+                        oninput="validateConfirmPassword()"
                         required
                       />
+                      <span
+                        id="confirmPasswordError"
+                        class="text-red-500 text-xs"
+                      ></span>
                     </div>
                   </div>
 
@@ -99,6 +113,7 @@
                     <textarea
                       id="about"
                       rows="4"
+                      th:field="*{about}"
                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                       placeholder="Enter about here."
                     ></textarea>
@@ -128,6 +143,7 @@
                       <input
                         type="text"
                         id="phone"
+                        th:field="*{phoneNumber}"
                         aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                         placeholder="Enter phone number here."

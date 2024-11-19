@@ -1,4 +1,4 @@
-package com.syncbox.entities;
+package com.syncbox.models.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

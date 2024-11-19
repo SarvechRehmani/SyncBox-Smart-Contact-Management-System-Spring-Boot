@@ -1,5 +1,7 @@
-package com.syncbox.entities;
+package com.syncbox.models.entities;
 
+import com.syncbox.models.Providers;
+import com.syncbox.models.entities.Contact;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class User {
 
     @Id
@@ -32,6 +35,7 @@ public class User {
     private boolean phoneVerified = false;
 
     private String providerId;
+    @Enumerated(EnumType.STRING)
     private Providers provider = Providers.SELF;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

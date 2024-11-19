@@ -1,4 +1,4 @@
-package com.syncbox.entities;
+package com.syncbox.models;
 
 public enum Providers {
     SELF,GOOGLE,GITHUB

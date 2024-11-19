@@ -1,6 +1,8 @@
 package com.syncbox.controllers;
 
+import com.syncbox.models.requests.UserDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,8 +26,12 @@ public class PageController {
     }
 
     @RequestMapping("/sign-up")
-    public  String register(){
+    public  String register(Model model){
         System.out.println("Register Controller");
+
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
+
         return "register";
     }
 }

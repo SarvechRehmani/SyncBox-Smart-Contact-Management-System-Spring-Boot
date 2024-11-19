@@ -78,3 +78,18 @@ function getTheme() {
   }
   return "light"; // Default to light
 }
+
+// VALIDATE PASSWORD
+function validateConfirmPassword() {
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+  // Clear the error message initially
+  confirmPasswordError.textContent = "";
+
+  // Check if passwords match
+  if (password !== confirmPassword) {
+    confirmPasswordError.textContent = "Passwords do not match.";
+  }
+}
