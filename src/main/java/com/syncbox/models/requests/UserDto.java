@@ -1,5 +1,8 @@
 package com.syncbox.models.requests;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -10,11 +13,16 @@ import lombok.*;
 @ToString
 public class UserDto {
 
+    @NotBlank(message = "Name is required.")
     private String name;
+    @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "Invalid Email Address.")
     private String email;
+    @NotBlank(message = "Password is required.")
+    @Size(min = 6,message = "Min 6 character is required.")
     private String password;
     private String confirmPassword;
     private String about;
+    @Size(min = 8, max = 12, message = "Invalid Phone Number.")
     private String phoneNumber;
     private String profilePic = "Default.png";
 }

@@ -14,6 +14,7 @@
           <div
             class="block p-6 bg-white border border-gray-200 border-t-purple-700 border-t-8 rounded-xl shadow hover:bg-gray-100 dark:bg-gray-900 dark:border-t-purple-800 dark:border-gray-600 dark:hover:bg-gray-800"
           >
+            <div th:replace="message :: alertBox"></div>
             <div class="grid grid-cols-2">
               <div class="col-span-2 md:col-span-1">
                 <h5
@@ -29,6 +30,7 @@
                   th:object="${userDto}"
                   method="post"
                   class="pr-5 mt-5"
+                  novalidate
                 >
                   <div class="mb-5">
                     <label
@@ -44,7 +46,13 @@
                       placeholder="Enter name here."
                       required
                     />
+                    <p
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"
+                      class="text-sm px-1 text-red-600 dark:text-red-500"
+                    ></p>
                   </div>
+
                   <div class="mb-5">
                     <label
                       for="email"
@@ -59,6 +67,11 @@
                       placeholder="Enter email here."
                       required
                     />
+                    <p
+                      th:if="${#fields.hasErrors('email')}"
+                      th:errors="*{email}"
+                      class="text-sm px-1 text-red-600 dark:text-red-500"
+                    ></p>
                   </div>
                   <div class="mb-5 grid grid-cols-2">
                     <div
@@ -78,6 +91,11 @@
                           placeholder="Enter password here."
                           required
                         />
+                        <p
+                          th:if="${#fields.hasErrors('password')}"
+                          th:errors="*{password}"
+                          class="text-sm px-1 text-red-600 dark:text-red-500"
+                        ></p>
                       </div>
                     </div>
                     <div
@@ -149,6 +167,11 @@
                         placeholder="Enter phone number here."
                         required
                       />
+                      <p
+                        th:if="${#fields.hasErrors('phoneNumber')}"
+                        th:errors="*{phoneNumber}"
+                        class="text-sm px-1 text-red-600 dark:text-red-500"
+                      ></p>
                     </div>
                   </div>
                   <div class="text-center">
