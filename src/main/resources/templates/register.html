@@ -112,7 +112,6 @@
                         th:field="*{confirmPassword}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
                         placeholder="Confirm password here."
-                        oninput="validateConfirmPassword()"
                         required
                       />
                       <span
@@ -177,7 +176,8 @@
                   <div class="text-center">
                     <button
                       type="submit"
-                      class="w-full text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                      id="signUpBtn"
+                      class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                     >
                       <i class="fa-solid fa-user-plus"></i> Sign Up
                     </button>
