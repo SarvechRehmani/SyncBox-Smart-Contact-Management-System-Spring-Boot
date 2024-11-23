@@ -52,8 +52,20 @@ public class SecurityConfig {
             authorize.requestMatchers("/user/**").authenticated();
             authorize.anyRequest().permitAll();
         });
+
+        httpSecurity.formLogin(formLogin->{
+            formLogin.loginPage("/sign-in")
+                    .loginProcessingUrl("/authenticate");
+            formLogin.successForwardUrl("/user/dashboard");
+            formLogin.failureForwardUrl("/sign-in?error=true");
+            formLogin.usernameParameter("email");
+            formLogin.passwordParameter("password");
+//            formLogin.successHandler();
+//            formLogin.failureHandler();
+        });
+
 //        Form Default login
-        httpSecurity.formLogin(Customizer.withDefaults());
+//        httpSecurity.formLogin(Customizer.withDefaults());
         return httpSecurity.build();
     }
 
