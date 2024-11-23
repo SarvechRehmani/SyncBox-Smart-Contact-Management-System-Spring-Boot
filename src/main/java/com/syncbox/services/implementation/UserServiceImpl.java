@@ -1,11 +1,13 @@
 package com.syncbox.services.implementation;
 
 import com.syncbox.exceptions.ResourceNotFoundException;
+import com.syncbox.helper.AppConstants;
 import com.syncbox.models.entities.User;
 import com.syncbox.repositories.UserRepository;
 import com.syncbox.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +17,23 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User saveUser(User user) {
         String userID = UUID.randomUUID().toString();
         user.setUserId(userID);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of(AppConstants.ROLE_USER));
         return this.userRepository.save(user);
     }
 

@@ -29,6 +29,12 @@ public class PageController {
         this.modelMapper = modelMapper;
     }
 
+    @RequestMapping("/home")
+    public  String index(){
+        System.out.println("home Controller");
+        return "redirect:/";
+    }
+
     @RequestMapping("/")
     public  String home(){
         System.out.println("Home Controller");
