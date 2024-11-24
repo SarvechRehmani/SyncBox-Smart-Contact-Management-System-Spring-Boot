@@ -2,12 +2,18 @@ package com.syncbox.configuration;
 
 
 import com.syncbox.services.implementation.SecurityCustomUserDetailService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +22,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfig {
@@ -57,13 +67,29 @@ public class SecurityConfig {
             formLogin.loginPage("/sign-in")
                     .loginProcessingUrl("/authenticate");
             formLogin.successForwardUrl("/user/dashboard");
-            formLogin.failureForwardUrl("/sign-in?error=true");
+//            formLogin.failureForwardUrl("/sign-in?error=true");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
-//            formLogin.successHandler();
-//            formLogin.failureHandler();
-        });
+//            formLogin.successHandler(new AuthenticationSuccessHandler() {
+//                @Override 
+//                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//
+//                }
+//            });
+//            formLogin.failureHandler(new AuthenticationFailureHandler() {
+//                @Override
+//                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+//
+//                }
+//            });
 
+
+        });
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.logout(logout -> {
+            logout.logoutUrl("/logout")
+               .logoutSuccessUrl("/sign-in");
+        });
 //        Form Default login
 //        httpSecurity.formLogin(Customizer.withDefaults());
         return httpSecurity.build();

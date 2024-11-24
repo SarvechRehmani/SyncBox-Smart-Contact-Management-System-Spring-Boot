@@ -1,17 +1,119 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}">
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
   <head>
     <title>Sign In | SyncBox</title>
   </head>
   <body>
-    <section id="content"> 
-        <h1>Welcome to Sign In Page!</h1>
-        <p>This is a sample HTML page.</p>
-        <a href="https://www.example.com">Visit Example Website</a>
+    <section id="content" class="my-3">
+      <div class="grid grid-cols-12">
+        <div class="col-span-4 md:col-span-1 xl:col-span-2"></div>
+        <div class="col-span-12 md:col-span-10 xl:col-span-8">
+          <div
+            class="block p-6 bg-white border border-gray-200 border-t-purple-700 border-t-8 rounded-xl shadow hover:bg-gray-100 dark:bg-gray-900 dark:border-t-purple-800 dark:border-gray-600 dark:hover:bg-gray-800"
+          >
+            <div th:if="${param.logout}">
+              <div th:replace="message::logoutBox"></div>
+            </div>
+            <div th:if="${param.error}">
+              <div th:replace="message::invalidCridentialBox"></div>
+            </div>
+
+            <div class="grid grid-cols-2">
+              <div class="col-span-2 md:col-span-1">
+                <h5
+                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                >
+                  Sign In
+                </h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">
+                  Welcome back! Sign in to access your SyncBox account.
+                </p>
+
+                <form
+                  th:action="@{'/authenticate'}"
+                  method="post"
+                  class="pr-5 mt-5"
+                  novalidate
+                >
+                  <div class="mb-5">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Email</label
+                    >
+
+                    <input
+                      name="email"
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                      placeholder="Enter email here."
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-5">
+                    <label
+                      for="password"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >Password</label
+                    >
+
+                    <input
+                      name="password"
+                      type="password"
+                      id="password"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                      placeholder="Enter password here."
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-5 flex items-center">
+                    <input
+                      type="checkbox"
+                      id="rememberMe"
+                      class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      for="rememberMe"
+                      class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >Remember Me</label
+                    >
+                  </div>
+
+                  <div class="mb-5 text-right">
+                    <a
+                      href="/forgot-password"
+                      class="text-sm text-purple-700 hover:underline dark:text-purple-500"
+                      >Forgot Password?</a
+                    >
+                  </div>
+
+                  <div class="text-center">
+                    <button
+                      type="submit"
+                      id="signInBtn"
+                      class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                    >
+                      <i class="fa-solid fa-sign-in"></i> Sign In
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="hidden md:flex justify-center items-center align-middle col-span-1 border-l-2 border-gray-200 dark:border-gray-600"
+              >
+                <img src="/images/loginPic.png" alt="Sign In" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    <script>
-      
-    </script>
+    <script></script>
   </body>
 </html>
