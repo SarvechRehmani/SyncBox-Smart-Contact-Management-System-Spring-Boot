@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +27,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class SecurityConfig {
@@ -52,11 +55,12 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-
-//    Configuration of SecurityFilterChain
+//
+////    Configuration of SecurityFilterChain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 //       Configure URLS
+
         httpSecurity.authorizeHttpRequests(authorize->{
 //            authorize.requestMatchers("/","sign-up","/sign-in").permitAll();
             authorize.requestMatchers("/user/**").authenticated();
@@ -64,18 +68,26 @@ public class SecurityConfig {
         });
 
         httpSecurity.formLogin(formLogin->{
-            formLogin.loginPage("/sign-in")
-                    .loginProcessingUrl("/authenticate");
-            formLogin.successForwardUrl("/user/dashboard");
-//            formLogin.failureForwardUrl("/sign-in?error=true");
+            formLogin.loginPage("/sign-in");
+            formLogin.loginProcessingUrl("/authenticate");
+//            formLogin.successForwardUrl("/user/dashboard");
+            formLogin.failureUrl("/sign-in?error=true");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
-//            formLogin.successHandler(new AuthenticationSuccessHandler() {
-//                @Override 
-//                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//
-//                }
-//            });
+
+            // Customize handlers
+            formLogin.successHandler(new AuthenticationSuccessHandler() {
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                    Set<String> roles =  AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+                    if(roles.contains("ROLE_ADMIN")){
+                        response.sendRedirect("/admin/dashboard");
+                    }else{
+                        response.sendRedirect("/user/dashboard");
+                    }
+
+                }
+            });
 //            formLogin.failureHandler(new AuthenticationFailureHandler() {
 //                @Override
 //                public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
@@ -83,17 +95,65 @@ public class SecurityConfig {
 //                }
 //            });
 
-
         });
-        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
+//        httpSecurity.formLogin(formLogin -> {
+//            formLogin
+//                    .loginPage("/sign-in") // Custom login page
+//                    .loginProcessingUrl("/authenticate") // Endpoint for Spring Security to handle login
+//                    .defaultSuccessUrl("/user/dashboard") // Redirect on successful authentication
+//                    .failureUrl("/sign-in?error=true") // Redirect on failed authentication
+//                    .usernameParameter("email") // Input field name for username
+//                    .passwordParameter("password"); // Input field name for password
+//        });
+
         httpSecurity.logout(logout -> {
             logout.logoutUrl("/logout")
-               .logoutSuccessUrl("/sign-in");
+               .logoutSuccessUrl("/sign-in?logout=true");
         });
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
 //        Form Default login
 //        httpSecurity.formLogin(Customizer.withDefaults());
         return httpSecurity.build();
     }
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        // Configure URL-based access
+//        httpSecurity.authorizeHttpRequests(authorize -> {
+//            authorize
+//                    .requestMatchers("/", "/sign-up", "/sign-in").permitAll() // Public access URLs
+//                    .requestMatchers("/user/**").authenticated() // Authenticated users only
+//                    .anyRequest().permitAll(); // Permit all other requests (adjust based on your app's needs)
+//        });
+//
+//        // Configure form-based login
+//        httpSecurity.formLogin(formLogin -> {
+//            formLogin
+//                    .loginPage("/sign-in") // Custom login page
+//                    .loginProcessingUrl("/authenticate") // Endpoint for Spring Security to handle login
+//                    .defaultSuccessUrl("/user/dashboard") // Redirect on successful authentication
+//                    .failureUrl("/sign-in?error=true") // Redirect on failed authentication
+//                    .usernameParameter("email") // Input field name for username
+//                    .passwordParameter("password"); // Input field name for password
+//        });
+//
+//        // Configure logout
+//        httpSecurity.logout(logout -> {
+//            logout
+//                    .logoutUrl("/logout") // Endpoint for logging out
+//                    .logoutSuccessUrl("/sign-in"); // Redirect after successful logout
+//        });
+//
+//        // Disable CSRF for development or specific use cases
+//        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+//
+//        // Build and return the SecurityFilterChain
+//        return httpSecurity.build();
+//    }
+
+
 
 //    IN MEMORY DEFAULT USERS
 //    @Bean

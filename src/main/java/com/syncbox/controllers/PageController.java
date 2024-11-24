@@ -11,9 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PageController {
@@ -47,10 +45,15 @@ public class PageController {
         return "about";
     }
 
-    @RequestMapping("/sign-in")
+    @GetMapping("/sign-in")
     public  String login(){
         System.out.println("Login Controller");
         return "login";
+    }
+    @PostMapping("/authenticate")
+    public String authenticateUser(@RequestParam String email, @RequestParam String password) {
+        // Authentication logic here
+        return "dashboard"; // Example response
     }
 
     @RequestMapping("/sign-up")
