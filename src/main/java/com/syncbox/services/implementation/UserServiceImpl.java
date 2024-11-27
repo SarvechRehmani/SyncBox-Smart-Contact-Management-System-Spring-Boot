@@ -34,12 +34,19 @@ public class UserServiceImpl implements UserService {
         user.setUserId(userID);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.setRoles(List.of(AppConstants.ROLE_USER));
+        this.logger.info("User saved");
         return this.userRepository.save(user);
     }
 
     @Override
     public Optional<User> getUserById(String id) {
         return this.userRepository.findById(id);
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        this.logger.info("Fetching user by email");
+        return this.userRepository.findByEmailIgnoreCase(email);
     }
 
     @Override
@@ -58,6 +65,7 @@ public class UserServiceImpl implements UserService {
         user2.setProviderId(user.getProviderId());
 
 //        save to Database
+        this.logger.info("Update User");
         User save = this.userRepository.save(user2);
         return Optional.ofNullable(save);
     }
@@ -76,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserExistByEmail(String email) {
-        User user = this.userRepository.findByEmail(email).orElse(null);
+        User user = this.userRepository.findByEmailIgnoreCase(email).orElse(null);
         return user != null;
     }
 

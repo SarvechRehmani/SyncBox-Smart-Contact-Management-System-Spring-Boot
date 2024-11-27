@@ -14,13 +14,7 @@
           <div
             class="block p-6 bg-white border border-gray-200 border-t-purple-700 border-t-8 rounded-xl shadow hover:bg-gray-100 dark:bg-gray-900 dark:border-t-purple-800 dark:border-gray-600 dark:hover:bg-gray-800"
           >
-            <div th:if="${param.logout}">
-              <div th:replace="message::logoutBox"></div>
-            </div>
-            <div th:if="${param.error}">
-              <div th:replace="message::invalidCridentialBox"></div>
-            </div>
-
+            <div th:replace="~{message :: alertBox}"></div>
             <div class="grid grid-cols-2">
               <div class="col-span-2 md:col-span-1">
                 <h5
@@ -102,7 +96,36 @@
                     </button>
                   </div>
                 </form>
+
+                <div class="flex items-center pr-5 gap-4 justify-center mt-4">
+                  <!-- Login with Google -->
+                  <a
+                    th:href="@{/oauth2/authorization/google}"
+                    class="flex items-center px-4 py-2 font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    <img
+                      th:src="@{images/google.svg}"
+                      alt="Google Logo"
+                      class="w-5 h-5 mr-2"
+                    />
+                    Login with Google
+                  </a>
+
+                  <!-- Login with GitHub -->
+                  <a
+                    th:href="@{/oauth2/authorization/github}"
+                    class="flex items-center px-4 py-2 font-medium text-white bg-gray-700 border border-gray-900 rounded-lg shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+                  >
+                    <img
+                      th:src="@{images/github.svg}"
+                      alt="GitHub Logo"
+                      class="w-5 h-5 mr-2"
+                    />
+                    Login with GitHub
+                  </a>
+                </div>
               </div>
+
               <div
                 class="hidden md:flex justify-center items-center align-middle col-span-1 border-l-2 border-gray-200 dark:border-gray-600"
               >

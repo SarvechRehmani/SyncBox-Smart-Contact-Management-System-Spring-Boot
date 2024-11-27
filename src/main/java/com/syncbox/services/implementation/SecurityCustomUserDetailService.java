@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class SecurityCustomUserDetailService implements UserDetailsService {
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public SecurityCustomUserDetailService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -20,7 +20,7 @@ public class SecurityCustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userRepository.findByEmail(username)
+        return this.userRepository.findByEmailIgnoreCase(username)
                 .orElseThrow(()-> new ResourceNotFoundException("User not found with email : "+username));
     }
 }

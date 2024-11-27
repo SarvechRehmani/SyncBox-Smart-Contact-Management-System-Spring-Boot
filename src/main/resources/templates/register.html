@@ -14,7 +14,7 @@
           <div
             class="block p-6 bg-white border border-gray-200 border-t-purple-700 border-t-8 rounded-xl shadow hover:bg-gray-100 dark:bg-gray-900 dark:border-t-purple-800 dark:border-gray-600 dark:hover:bg-gray-800"
           >
-            <div th:replace="message :: alertBox"></div>
+            <div th:replace="~{message :: alertBox}"></div>
             <div class="grid grid-cols-2">
               <div class="col-span-2 md:col-span-1">
                 <h5
