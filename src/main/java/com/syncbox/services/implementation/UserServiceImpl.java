@@ -2,6 +2,7 @@ package com.syncbox.services.implementation;
 
 import com.syncbox.exceptions.ResourceNotFoundException;
 import com.syncbox.helper.AppConstants;
+import com.syncbox.models.entities.Role;
 import com.syncbox.models.entities.User;
 import com.syncbox.repositories.UserRepository;
 import com.syncbox.services.UserService;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder) {
@@ -31,9 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         String userID = UUID.randomUUID().toString();
+        Role userRole = new Role(AppConstants.USER_ROLE_ID);
         user.setUserId(userID);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of(AppConstants.ROLE_USER));
+        user.setRole(userRole);
         this.logger.info("User saved");
         return this.userRepository.save(user);
     }

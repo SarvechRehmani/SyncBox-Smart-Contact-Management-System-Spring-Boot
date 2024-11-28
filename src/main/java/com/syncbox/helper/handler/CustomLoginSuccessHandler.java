@@ -76,7 +76,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         }
     }
     private void googleAuthentication(DefaultOAuth2User oAuth2User){
-        this.logger.info("Extracting user from DefaultOAuth2User : {}",oAuth2User);
+        this.logger.info("Extracting user from GOOGLE DefaultOAuth2User : {}",oAuth2User);
         String name = oAuth2User.getAttribute("name");
         String email = oAuth2User.getAttribute("email");
         String picture = oAuth2User.getAttribute("picture");
@@ -94,10 +94,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                 .about("Google account authentication was used to create this profile.")
                 .build();
 
-        this.logger.info("Check user present if not then save user to database.");
+        this.logger.info("Check user present if not then save user to database. GOOGLE");
         User isPresentUser = this.userService.getUserByEmail(email).orElse(null);
         if(isPresentUser == null){
-            this.logger.info("Saving user to database.");
+            this.logger.info("Saving user to database. GOOGLE");
             this.userService.saveUser(user);
             this.logger.info("USER SAVED SUCCESSFUL FROM GOOGLE");
         }
@@ -105,13 +105,13 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 
     public void githubAuthentication(DefaultOAuth2User oAuth2User){
-        this.logger.info("Extracting user from DefaultOAuth2User : {}",oAuth2User);
+        this.logger.info("Extracting user from GITHUB DefaultOAuth2User : {}",oAuth2User);
         String name = oAuth2User.getAttribute("name");
         String email = (oAuth2User.getAttribute("email")) != null ?
                 oAuth2User.getAttribute("email") :
                 oAuth2User.getAttribute("login") + "@github.com";
         String picture = oAuth2User.getAttribute("avatar_url");
-        String providerId = oAuth2User.getAttribute("node_id");
+        String providerId = oAuth2User.getName();
         String about = oAuth2User.getAttribute("bio");
         User user = User.builder()
                 .name(name)
@@ -125,10 +125,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                 .about(about)
                 .build();
 
-        this.logger.info("Check user present if not then save user to database.");
+        this.logger.info("Check user present if not then save user to database. GITHUB");
         User isPresentUser = this.userService.getUserByEmail(email).orElse(null);
         if(isPresentUser == null){
-            this.logger.info("Saving user to database.");
+            this.logger.info("Saving user to database. GITHUB");
             this.userService.saveUser(user);
             this.logger.info("USER SAVED SUCCESSFUL FROM GITHUB");
         }

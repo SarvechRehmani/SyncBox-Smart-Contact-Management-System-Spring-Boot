@@ -3,13 +3,12 @@ package com.syncbox.models.entities;
 import com.syncbox.models.Providers;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -42,19 +41,27 @@ public class User implements  UserDetails{
     @Enumerated(EnumType.STRING)
     private Providers provider = Providers.SELF;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Contact> contacts = new ArrayList<>();
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Role role;
 
 //    UserDetails Methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 //        List of roles
 //        Collection of SimpleGrantedAuthority(roles{ADMIN,USER})
-        Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = roles.stream().map(role-> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
-        return simpleGrantedAuthorities;
+//        Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = roles.stream().map(role-> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+//        return simpleGrantedAuthorities;
+        Set<GrantedAuthority> set = new HashSet<>(Set.of(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return role.getRoleName();
+            }
+        }));
+        return set;
     }
 
     @Override
