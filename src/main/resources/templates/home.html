@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}">
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
   <head>
     <title>Welcome To SyncBox</title>
   </head>
   <body>
-    <section id="content"> 
-        <h1>Welcome to My Website!</h1>
-        <p>This is a sample HTML page.</p>
-        <a href="https://www.example.com">Visit Example Website</a>
+    <section id="content">
+      <h1>Welcome to My Website!</h1>
+      <p>This is a sample HTML page.</p>
+      <div th:if="${user}">
+        <h1 th:text="${user.name}"></h1>
+        <h1 th:text="${user.email}"></h1>
       </div>
+      <a href="https://www.example.com">Visit Example Website</a>
     </section>
-    <script>
-      
-    </script>
+    <script></script>
   </body>
 </html>

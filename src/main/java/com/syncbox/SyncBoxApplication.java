@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.nio.file.Paths;
+
 @SpringBootApplication
 public class SyncBoxApplication implements CommandLineRunner {
 
@@ -23,9 +25,7 @@ public class SyncBoxApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String id = "107524983605802437110";
-
-		User user = userRepository.findByUserIdOrProviderId(id).orElse(null);
-		System.out.println(user);
+//		String path = Paths.get("").toAbsolutePath().toString();
+//		System.out.println(path);
 	}
 }

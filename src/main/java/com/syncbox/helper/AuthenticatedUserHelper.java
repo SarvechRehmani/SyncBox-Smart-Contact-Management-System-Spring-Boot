@@ -1,38 +1,40 @@
 package com.syncbox.helper;
 
+import com.syncbox.models.entities.User;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.nio.file.Paths;
+
 public class AuthenticatedUserHelper {
 
-    public static String getUserDtoResponse(Authentication authentication) {
-        // Implement logic to get username from the authenticated user
-        String id = "";
-        String name = "User";
-        String email = "";
-        if(authentication instanceof OAuth2AuthenticationToken oAuth2AuthenticationToken) {
-            var clientId = oAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticatedUserHelper.class);
+
+    public static String getAuthenticatedEmail(Authentication authentication) {
+        // Implement logic to get email from the authenticated user
+        if (authentication instanceof OAuth2AuthenticationToken oAuth2Token) {
+            var clientId = oAuth2Token.getAuthorizedClientRegistrationId();
             var oAuth2User = (OAuth2User) authentication.getPrincipal();
-            id = oAuth2User.getName();
-            name = oAuth2User.getAttribute("name");
-            if(clientId.equalsIgnoreCase("google")){
-                email = oAuth2User.getAttribute("email");
-            }else if(clientId.equalsIgnoreCase("github")){
-                email = (oAuth2User.getAttribute("email") != null) ?
+            if (clientId.equalsIgnoreCase("google")) {
+                logger.info("Getting email from google authenticated.");
+                return oAuth2User.getAttribute("email");
+            } else if (clientId.equalsIgnoreCase("github")) {
+                logger.info("Getting email from github authenticated.");
+                return (oAuth2User.getAttribute("email") != null) ?
                         oAuth2User.getAttribute("email") :
                         oAuth2User.getAttribute("login") + "@github.com";
-            }else{
+            } else {
                 // Handle other OAuth2 providers here
-
+                return "";
             }
-        }else{
+        } else {
 //            Self registered user
-
-            return "";
+            return ((User) authentication.getPrincipal()).getEmail();
         }
-        return "username";
     }
-
 }
 

@@ -1,4 +1,3 @@
-let currentTheme = getTheme();
 // initial
 document.addEventListener("DOMContentLoaded", () => {
   changeTheme();
@@ -6,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function changeTheme() {
   // Log the current theme for debugging
+  let currentTheme = getTheme();
   console.log("Current theme:", currentTheme);
 
   // Validate currentTheme before adding to the DOM

@@ -95,7 +95,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                 .build();
 
         this.logger.info("Check user present if not then save user to database. GOOGLE");
-        User isPresentUser = this.userService.getUserByEmail(email).orElse(null);
+        User isPresentUser = this.userService.getUserByEmail(email);
         if(isPresentUser == null){
             this.logger.info("Saving user to database. GOOGLE");
             this.userService.saveUser(user);
@@ -126,7 +126,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
                 .build();
 
         this.logger.info("Check user present if not then save user to database. GITHUB");
-        User isPresentUser = this.userService.getUserByEmail(email).orElse(null);
+        User isPresentUser = this.userService.getUserByEmail(email);
         if(isPresentUser == null){
             this.logger.info("Saving user to database. GITHUB");
             this.userService.saveUser(user);

@@ -45,15 +45,24 @@ public class PageController {
         return "about";
     }
 
+    @RequestMapping("/services")
+    public  String services(){
+        System.out.println("About Controller");
+        return "services";
+    }
+
+    @RequestMapping("/contact-us")
+    public  String contactUs(){
+        System.out.println("About Controller");
+        return "contact";
+    }
+
+
+
     @GetMapping("/sign-in")
     public  String login(){
         System.out.println("Login Controller");
         return "login";
-    }
-    @PostMapping("/authenticate")
-    public String authenticateUser(@RequestParam String email, @RequestParam String password) {
-        // Authentication logic here
-        return "dashboard"; // Example response
     }
 
     @RequestMapping("/sign-up")
@@ -65,8 +74,6 @@ public class PageController {
 
         return "register";
     }
-
-
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, HttpSession session){
@@ -84,5 +91,4 @@ public class PageController {
         session.setAttribute("message",message);
         return "redirect:/sign-up";
     }
-
 }

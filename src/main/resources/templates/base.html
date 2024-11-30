@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html
-  class="light"
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   th:fragment="parent(content, title, script)"
@@ -28,14 +27,22 @@
 
     <title data-th-replace="${title}">SyncBox</title>
   </head>
-  <body class="dark:bg-gray-800 dark:text-white bg-purple-100">
+  <body
+    class="dark:bg-gray-800 dark:text-white bg-purple-100 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-purple-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300 dark:[&::-webkit-scrollbar-track]:bg-purple-700 dark:[&::-webkit-scrollbar-thumb]:bg-purple-400"
+  >
     <!-- HEADER -->
-    <div data-th-replace="~{commonFragments :: navbar}"></div>
+
+    <div th:if="${user}">
+      <div
+        data-th-replace="~{user/userCommonComponents :: registeredUserSidebar}"
+      ></div>
+    </div>
+    <div th:unless="${user}">
+      <div data-th-replace="~{commonFragments :: navbar}"></div>
+    </div>
 
     <!-- MAIN CONTENT -->
-    <div>
-      <section data-th-replace="${content}"></section>
-    </div>
+    <section data-th-replace="${content}"></section>
 
     <!-- FOOTER -->
     <div data-th-replace="~{commonFragments :: footer}"></div>

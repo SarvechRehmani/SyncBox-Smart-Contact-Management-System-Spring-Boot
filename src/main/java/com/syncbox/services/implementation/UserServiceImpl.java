@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         this.logger.info("Fetching user by email");
-        return this.userRepository.findByEmailIgnoreCase(email);
+        return this.userRepository.findByEmailIgnoreCase(email).orElse(null);
     }
 
     @Override
