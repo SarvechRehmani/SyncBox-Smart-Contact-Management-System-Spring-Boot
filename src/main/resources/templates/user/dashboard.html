@@ -7,7 +7,10 @@
     <title>Dashboard | SyncBox</title>
   </head>
   <body>
-    <section id="content">
+    <div
+      id="content"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full md:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
+    >
       <div th:replace="~{message :: alertBox}"></div>
       <div class="grid grid-cols-3 gap-4 mb-4">
         <div
@@ -288,7 +291,7 @@
           </p>
         </div>
       </div>
-    </section>
+    </div>
     <script></script>
   </body>
 </html>

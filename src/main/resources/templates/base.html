@@ -46,11 +46,7 @@
 
     <!-- MAIN CONTENT -->
     <div th:if="${user}" class="p-4 sm:ml-80">
-      <div
-        class="bg-white dark:bg-gray-900 p-8 border-2 w-full md:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
-      >
-        <section data-th-replace="${content}"></section>
-      </div>
+      <section data-th-replace="${content}"></section>
     </div>
 
     <div th:unless="${user}">
@@ -62,7 +58,7 @@
 
     <!-- SCRIPT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
-    
+
     <script th:src="@{'/js/script.js'}"></script>
     <th:block data-th-replace="${script}"></th:block>
   </body>

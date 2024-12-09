@@ -40,6 +40,10 @@
   animation: jelly 0.6s ease;
 }
 
+.dark #favorite:checked ~ .cbx {
+  background: rgb(126 58 242);
+}
+
 #favorite:checked ~ .cbx:after {
   opacity: 1;
   transform: rotate(45deg) scale(1);
@@ -81,4 +85,38 @@
 
 .hidden-xs-up {
   display: none !important;
+}
+
+/* FAVIROUTE CHECKBOX */
+.fav-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.fav-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fav-container svg {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  transition: all 0.3s;
+  fill: #666;
+}
+
+.fav-container svg:hover {
+  transform: scale(1.1);
+}
+
+.fav-container input:checked ~ svg {
+  fill: rgb(255, 96, 122);
 }
