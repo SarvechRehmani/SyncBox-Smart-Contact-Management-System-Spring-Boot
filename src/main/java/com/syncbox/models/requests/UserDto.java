@@ -1,5 +1,6 @@
 package com.syncbox.models.requests;
 
+import com.syncbox.helper.AppConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -15,7 +16,7 @@ public class UserDto {
 
     @NotBlank(message = "Name is required.")
     private String name;
-    @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "Invalid Email Address.")
+    @Email(regexp = AppConstants.EMAIL_REGEX ,message = "Invalid Email Address.")
     private String email;
     @NotBlank(message = "Password is required.")
     @Size(min = 6,message = "Min 6 character is required.")

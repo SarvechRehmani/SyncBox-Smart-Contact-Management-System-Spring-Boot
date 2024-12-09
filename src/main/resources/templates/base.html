@@ -25,6 +25,9 @@
 
     <link rel="stylesheet" data-th-href="@{/css/output.css}" />
 
+    <!-- CUSTOME CSS -->
+    <link rel="stylesheet" data-th-href="@{/css/style.css}" />
+
     <title data-th-replace="${title}">SyncBox</title>
   </head>
   <body
@@ -42,13 +45,24 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <section data-th-replace="${content}"></section>
+    <div th:if="${user}" class="p-4 sm:ml-80">
+      <div
+        class="bg-white dark:bg-gray-900 p-8 border-2 w-full md:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
+      >
+        <section data-th-replace="${content}"></section>
+      </div>
+    </div>
+
+    <div th:unless="${user}">
+      <section data-th-replace="${content}"></section>
+    </div>
 
     <!-- FOOTER -->
     <div data-th-replace="~{commonFragments :: footer}"></div>
 
     <!-- SCRIPT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
+    
     <script th:src="@{'/js/script.js'}"></script>
     <th:block data-th-replace="${script}"></th:block>
   </body>

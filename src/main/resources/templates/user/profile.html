@@ -1,2 +1,15 @@
-<h1 th:text="${user.name}"></h1>
-<h1 th:text="${user.email}"></h1>
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
+  <head>
+    <title th:text="${user.name}+'\'s Profile | SyncBox'">
+      Profile | SyncBox
+    </title>
+  </head>
+  <body>
+    <section id="content"></section>
+    <script></script>
+  </body>
+</html>

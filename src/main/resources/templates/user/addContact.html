@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Add Contact | SyncBox</title>
+  </head>
+  <body>
+    <section id="content">
+      <div class="container">
+        <div th:replace="~{message :: alertBox}"></div>
+        <div class="flex flex-col justify-center items-center">
+          <h2 class="text-2xl font-semibold">Add New Contact</h2>
+          <p class="text-center text-gray-400 dark:text-gray-600 font-semibold">
+            Add a new contact to manage your contact list in the cloud,
+            accessible from anywhere.
+          </p>
+        </div>
+        <form
+          th:action="@{/user/contacts/add}"
+          th:object="${contactDto}"
+          method="POST"
+          class="mt-5"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <!-- ROW 1: NAME, EMAIL -->
+          <div class="grid grid-cols-2 gap-5 mb-3">
+            <!-- Name Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                for="contact-name"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact Name</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <i
+                    class="fa-regular fa-user w-4 h-4 text-gray-500 dark:text-gray-400"
+                  ></i>
+                </div>
+                <input
+                  type="text"
+                  id="contact-name"
+                  th:field="*{name}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  placeholder="John Smith"
+                />
+              </div>
+              <p
+                th:if="${#fields.hasErrors('name')}"
+                th:errors="*{name}"
+                class="text-sm px-1 text-red-600 dark:text-red-500"
+              ></p>
+            </div>
+            <!-- Email Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                for="contact-email"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact Email</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <i
+                    class="fa-regular fa-envelope w-4 h-4 text-gray-500 dark:text-gray-400"
+                  ></i>
+                </div>
+                <input
+                  type="email"
+                  id="contact-email"
+                  th:field="*{email}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  placeholder="john@example.com"
+                />
+              </div>
+              <p
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"
+                class="text-sm px-1 text-red-600 dark:text-red-500"
+              ></p>
+            </div>
+          </div>
+          <!-- ROW 2: PHONE, PROFILE -->
+          <div class="grid grid-cols-2 gap-5 mb-3">
+            <!-- Phone Field -->
+            <div class="col-span-2 md:col-span-1">
+              <!-- Phone Field -->
+              <label
+                for="contact-phone"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact Phone</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <i
+                    class="fa-solid fa-phone w-4 h-4 text-gray-500 dark:text-gray-400"
+                  ></i>
+                </div>
+                <input
+                  type="tel"
+                  id="contact-phone"
+                  th:field="*{phoneNumber}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  placeholder="+92-111-1111111"
+                />
+              </div>
+              <p
+                th:if="${#fields.hasErrors('phoneNumber')}"
+                th:errors="*{phoneNumber}"
+                class="text-sm px-1 text-red-600 dark:text-red-500"
+              ></p>
+            </div>
+            <!-- Profile Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="contact-image"
+                >Contact Profile</label
+              >
+              <input
+                class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                id="contact-image"
+                type="file"
+                th:field="*{profileImage}"
+              />
+            </div>
+          </div>
+          <!-- ROW 3: ADDRESS AND DESCRIPTION -->
+          <div class="grid grid-cols-2 gap-5 mb-3">
+            <!-- Contact Address Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                for="contact-address"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact Address</label
+              >
+              <textarea
+                id="contact-address"
+                rows="4"
+                th:field="*{address}"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                placeholder="Enter the contact address here..."
+              ></textarea>
+            </div>
+            <!-- Contact Description Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                for="contact-description"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact Description</label
+              >
+              <textarea
+                id="contact-description"
+                rows="4"
+                th:field="*{description}"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                placeholder="Enter the contact description here..."
+              ></textarea>
+            </div>
+          </div>
+          <!-- ROW 4: SOCIAL LINKS -->
+          <div class="grid grid-cols-2 gap-5 mb-7">
+            <!-- WebsiteLink Field -->
+            <div class="col-span-2 md:col-span-1">
+              <!-- Website Field -->
+              <label
+                for="website-link"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Website Link</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <i
+                    class="fa-regular fa-user w-4 h-4 text-gray-500 dark:text-gray-400"
+                  ></i>
+                </div>
+                <input
+                  type="text"
+                  id="webiste-link"
+                  th:field="*{websiteLink}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  placeholder="https://www.syncbox.com"
+                />
+              </div>
+            </div>
+            <!-- LinkedIn Field -->
+            <div class="col-span-2 md:col-span-1">
+              <label
+                for="linkedin-link"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >LinkedIn Link</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
+                  <i
+                    class="fa-brands fa-linkedin-in w-4 h-4 text-gray-500 dark:text-gray-400"
+                  ></i>
+                </div>
+                <input
+                  type="text"
+                  id="linkedin-link"
+                  th:field="*{linkedInLink}"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                  placeholder="https://www.linkedin.com/in/Syncbox"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- ROW 5: FAVORITE -->
+          <div class="grid grid-cols-2 mb-4">
+            <div class="col-span-2 flex gap-2 items-center">
+              <div class="cntr">
+                <input
+                  th:field="*{favorite}"
+                  type="checkbox"
+                  id="favorite"
+                  class="hidden-xs-up"
+                />
+                <label for="favorite" class="cbx"></label>
+              </div>
+              <label for="favorite" class="font-bold mt-1"
+                >Mark this contact as your favorite.</label
+              >
+            </div>
+          </div>
+          <!-- ROW 6: SUBMIT BUTTON -->
+          <div class="grid grid-cols-3 mb-3">
+            <div class="col-span-1"></div>
+            <div class="col-span-3 md:col-span-1">
+              <button
+                type="submit"
+                id="signInBtn"
+                class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+              >
+                <i class="fa-solid fa-plus fa-bounce"></i> Add Contact
+              </button>
+            </div>
+          </div>
+
+          <!-- ROW 7: IMAGE PREVIEW -->
+          <div class="grid grid-cols-7">
+            <div class="col-span-1"></div>
+            <div
+              id="img-container"
+              class="col-span-7 md:col-span-5 hidden border border-purple-700 p-3 shadow rounded-md bg-purple-100 dark:bg-gray-800"
+            >
+              <img src="" id="image-preview" alt="Preview image" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script>
+      let fileInput = document.getElementById("contact-image");
+      let imagePreview = document.getElementById("image-preview");
+      let imgContainer = document.getElementById("img-container");
+      fileInput.addEventListener("change", function (event) {
+        var file = event.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function () {
+          imagePreview.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+        imgContainer.classList.remove("hidden");
+      });
+    </script>
+  </body>
+</html>

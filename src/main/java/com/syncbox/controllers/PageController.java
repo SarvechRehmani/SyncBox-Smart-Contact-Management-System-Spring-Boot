@@ -75,7 +75,7 @@ public class PageController {
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/sign-up")
     public String register(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, HttpSession session){
         System.out.println(userDto);
 //        Validation

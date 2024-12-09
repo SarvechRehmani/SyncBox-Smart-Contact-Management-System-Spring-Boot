@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Contact {
 
     @Id
@@ -22,6 +23,7 @@ public class Contact {
     private String phoneNumber;
     private String address;
     private String picture;
+    private String cloudinaryPublicId;
     @Column(length = 10000, columnDefinition = "TEXT")
     private String description;
     private boolean favorite = false;
@@ -30,6 +32,7 @@ public class Contact {
 
     @ManyToOne
     private User user;
+
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialLink> socialLinks = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.syncbox;
 
+import com.syncbox.helper.AppConstants;
 import com.syncbox.models.entities.User;
 import com.syncbox.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @SpringBootApplication
 public class SyncBoxApplication implements CommandLineRunner {
@@ -27,5 +29,7 @@ public class SyncBoxApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		String path = Paths.get("").toAbsolutePath().toString();
 //		System.out.println(path);
+
+
 	}
 }

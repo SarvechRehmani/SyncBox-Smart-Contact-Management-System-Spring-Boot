@@ -3,7 +3,7 @@
   th:fragment="alertBox"
   th:if="${session.message}"
   th:object="${session.message}"
-  th:classappend="*{'text-'+type+'-800 border-'+type+'-300 bg-'+type+'-50 dark:text-'+type+'-400 dark:border-'+type+'-700 border-'+type+'-400'}"
+  th:classappend="*{'text-'+type+'-800 border-'+type+'-300 bg-'+type+'-50 dark:text-'+type+'-300 dark:border-'+type+'-700 border-'+type+'-400'}"
   id="alert-border-1"
   class="flex items-center p-4 mb-4 dark:bg-gray-800 border-t-4 rounded-xl"
   role="alert"

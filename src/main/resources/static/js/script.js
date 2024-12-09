@@ -78,29 +78,3 @@ function getTheme() {
   }
   return "light"; // Default to light
 }
-
-// VALIDATE PASSWORD
-// Function to validate password match
-function validatePasswords() {
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-  const confirmPasswordError = document.getElementById("confirmPasswordError");
-  const signUpBtn = document.getElementById("signUpBtn");
-
-  // Check if passwords match
-  if (password !== confirmPassword) {
-    confirmPasswordError.textContent = "Passwords do not match.";
-    signUpBtn.disabled = true;
-  } else {
-    confirmPasswordError.textContent = ""; // Clear the error
-    signUpBtn.disabled = false;
-  }
-}
-
-// Add event listeners for dynamic validation
-document
-  .getElementById("password")
-  .addEventListener("input", validatePasswords);
-document
-  .getElementById("confirmPassword")
-  .addEventListener("input", validatePasswords);
