@@ -26,6 +26,7 @@ public class SyncBoxApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(SyncBoxApplication.class, args);
 		System.out.println("project started...");
+		
 
 
 	}
@@ -34,7 +35,5 @@ public class SyncBoxApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		String path = Paths.get("").toAbsolutePath().toString();
 //		System.out.println(path);
-
-		System.out.println(this.bCryptPasswordEncoder.encode("sarwech99@gmail.com"));
 	}
 }
