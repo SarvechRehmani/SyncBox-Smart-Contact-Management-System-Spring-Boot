@@ -18,5 +18,10 @@ public class SessionHelper {
             e.printStackTrace();
         }
     }
+
+//    Adding Https:// to the URl
+    public static String getCorrectUrl(String url){
+        return url.startsWith("https://") ? url : "https://" + url;
+    }
 }
 

@@ -2,6 +2,8 @@ package com.syncbox.repositories;
 
 import com.syncbox.models.entities.Contact;
 import com.syncbox.models.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +16,7 @@ public interface ContactRepository extends JpaRepository<Contact, String> {
 
 //    Custom Finder Method
     List<Contact> findByUser(User user);
+    Page<Contact> findByUser(User user, Pageable pageable);
     List<Contact> findByUserAndNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCase
             (User user, String nameQuery, String emailQuery, String phoneNumberQuery);
 

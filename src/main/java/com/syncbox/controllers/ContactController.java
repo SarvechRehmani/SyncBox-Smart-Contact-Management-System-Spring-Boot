@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -47,33 +48,12 @@ public class ContactController {
         this.imageService = imageService;
     }
 
-    @GetMapping
-    public String contactListView(Model model, Authentication authentication) {
-        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
-        User user = this.userService.getUserByEmail(email);
-        model.addAttribute("contacts", this.contactService.getContactsByUser(user));
-        return "user/contacts";
-    }
-
-
-    @GetMapping("/update-favorite/{id}")
-    public ResponseEntity<?> markContactAsFavorite(@PathVariable String id) {
-        Contact contact = this.contactService.getContactById(id);
-        contact.setFavorite(!contact.isFavorite());
-        // Update logic here
-        contactService.updateContact(contact);
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Favorite status updated successfully");
-        response.put("favorite", contact.isFavorite()); // Optional: include new status
-        return ResponseEntity.ok(response); // Return JSON
-    }
-
-
     //    Add Contact View
-    @RequestMapping("/add")
+    @GetMapping("/add")
     public String addContactView(Model model) {
         ContactDto contactDto = new ContactDto();
         model.addAttribute("contactDto", contactDto);
+        this.logger.info("Add Contact View.");
         return "user/addContact";
     }
 //    Handle Add Contact Request
@@ -86,8 +66,10 @@ public class ContactController {
             session.setAttribute("message", new Message("Please correct the errors in the form and try again.", MessageType.yellow));
             return "user/addContact";
         }
+        this.logger.info("Converting DTO to Entity");
 //      Converting Dto to Entity
         Contact contact = this.modelMapper.map(contactDto, Contact.class);
+        this.logger.info("Getting Authenticated User from Authentication");
 //      get authenticated user
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
         User user = this.userService.getUserByEmail(email);
@@ -98,10 +80,50 @@ public class ContactController {
            contact.setCloudinaryPublicId(fileName);
            contact.setPicture(imageUrl);
        }
+        this.logger.info("Saving Contact to Database");
         // Save contact to database
         this.contactService.saveContact(contact);
         session.setAttribute("message",new Message("You have successfully added a new contact", MessageType.purple));
         return "redirect:/user/contacts/add";
+    }
+//  Contact List View with user and pagination
+    @GetMapping
+    public String contactListView(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model, Authentication authentication) {
+        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
+        User user = this.userService.getUserByEmail(email);
+        model.addAttribute("pageContacts", this.contactService.getContactsByUser(user,page,size,sortBy,direction));
+        this.logger.info("Contact List View.");
+        return "user/contacts";
+    }
+
+//  Mark Contact As Favourite handler
+    @GetMapping("/update-favorite/{id}")
+    public ResponseEntity<?> markContactAsFavorite(@PathVariable String id) {
+        this.logger.info("Mark Contact As Favorite Handler.");
+        Map<String, Object> response = new HashMap<>();
+        if(id == null) {
+            response.put("message","Id is null. Please provide correct Id");
+            return ResponseEntity.badRequest().body(response);
+        }
+        this.logger.info("Fetching contact by ID");
+        Contact contact = this.contactService.getContactById(id);
+        if(contact == null) {
+            response.put("message", "Contact not found with this id:"+id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+        this.logger.info("Toggle favourite contact");
+        contact.setFavorite(!contact.isFavorite());
+        // Update logic here
+        this.logger.info("Updating contact in database");
+        contactService.updateContact(contact);
+        response.put("message", "Favorite status updated successfully");
+        response.put("favorite", contact.isFavorite()); // Optional: include new status
+        return ResponseEntity.ok(response); // Return JSON
     }
 
 

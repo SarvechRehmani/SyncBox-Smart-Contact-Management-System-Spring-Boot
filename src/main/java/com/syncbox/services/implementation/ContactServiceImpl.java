@@ -5,6 +5,10 @@ import com.syncbox.models.entities.Contact;
 import com.syncbox.models.entities.User;
 import com.syncbox.repositories.ContactRepository;
 import com.syncbox.services.ContactService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +55,13 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public List<Contact> getContactsByUser(User user) {
         return this.contactRepository.findByUser(user);
+    }
+
+    @Override
+    public Page<Contact> getContactsByUser(User user, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equals("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return this.contactRepository.findByUser(user, pageable);
     }
 
     @Override
