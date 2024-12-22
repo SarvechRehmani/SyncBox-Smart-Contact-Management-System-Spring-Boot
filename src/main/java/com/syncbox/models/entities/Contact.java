@@ -1,7 +1,9 @@
 package com.syncbox.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +33,8 @@ public class Contact {
     private String linkedInLink;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
-
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SocialLink> socialLinks = new ArrayList<>();

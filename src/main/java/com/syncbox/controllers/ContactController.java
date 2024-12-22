@@ -79,6 +79,9 @@ public class ContactController {
            String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName);
            contact.setCloudinaryPublicId(fileName);
            contact.setPicture(imageUrl);
+       }else{
+           contact.setCloudinaryPublicId("");
+           contact.setPicture(AppConstants.DEFAULT_CONTACT_IMG);
        }
         this.logger.info("Saving Contact to Database");
         // Save contact to database
@@ -86,7 +89,8 @@ public class ContactController {
         session.setAttribute("message",new Message("You have successfully added a new contact", MessageType.purple));
         return "redirect:/user/contacts/add";
     }
-//  Contact List View with user and pagination
+
+    //  Contact List View with user and pagination
     @GetMapping
     public String contactListView(
             @RequestParam(value = "page", defaultValue = "0") int page,

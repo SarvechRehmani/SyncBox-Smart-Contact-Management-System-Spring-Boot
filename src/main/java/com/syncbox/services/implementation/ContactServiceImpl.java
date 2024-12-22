@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +51,17 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Contact getContactById(String id) {
         return this.contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find contact with this id:"+id));
+    }
+
+    @Override
+    public Contact getContactByUserAndId(User user, String id) {
+        return this.contactRepository.findByUserAndContactId(user, id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void deleteContactByUserAndId(User user, String id) {
+        this.contactRepository.deleteByUserAndContactId(user, id);
     }
 
     @Override

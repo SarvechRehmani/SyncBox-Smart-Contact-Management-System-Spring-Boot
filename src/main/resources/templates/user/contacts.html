@@ -9,8 +9,9 @@
   <body>
     <div
       id="content"
-      class="bg-white dark:bg-gray-900 p-8 border-2 w-full md:w-[95%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[95%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
     >
+      <div th:replace="~{user/modal :: viewContactModal}"></div>
       <div class="flex flex-col justify-center items-center">
         <h2 class="text-2xl font-semibold">Manage Contacts</h2>
         <p class="text-center text-gray-400 dark:text-gray-600 font-semibold">
@@ -208,24 +209,24 @@
               </td>
               <!-- ACTION -->
               <td class="px-6 py-4 flex gap-2">
-                <a
-                  href="#"
+                <button
+                  th:onclick="fetchContact([[${contact.contactId}]])"
                   class="p-2 font-medium text-purple-600 hover:text-purple-400 dark:text-purple-500 dark:hover:text-purple-400"
                 >
                   <i class="fa-xl fa-solid fa-eye"></i>
-                </a>
+                </button>
                 <a
                   href="#"
                   class="p-2 font-medium text-orange-600 hover:text-orange-400 dark:text-orange-500 dark:hover:text-orange-400"
                 >
                   <i class="fa-xl fa-solid fa-pen-to-square"></i>
                 </a>
-                <a
-                  href="#"
+                <button
+                  th:onclick="deleteContact([[${contact.contactId}]])"
                   class="p-2 font-medium text-red-600 hover:text-red-400 dark:text-red-500 dark:hover:text-red-400"
                 >
                   <i class="fa-xl fa-solid fa-trash"></i>
-                </a>
+                </button>
               </td>
             </tr>
             <tr th:if="${pageContacts.content.isEmpty()}">
@@ -271,6 +272,7 @@
               </a>
             </li>
             <li
+              th:if="!${pageContacts.content.isEmpty()}"
               th:each="index : ${#numbers.sequence(0,pageContacts.totalPages-1)}"
             >
               <a

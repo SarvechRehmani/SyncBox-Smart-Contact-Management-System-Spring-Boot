@@ -1,0 +1,161 @@
+<div th:fragment="viewContactModal">
+  <!-- Main modal -->
+  <div
+    id="viewContactModal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div
+          class="relative p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <div class="flex items-center justify-center flex-col">
+            <img
+              id="picture"
+              class="rounded-full border w-60 h-60 mb-3"
+              th:src="@{/images/Default.png}"
+              alt="image description"
+            />
+            <div class="inline-flex">
+              <h3
+                id="name"
+                class="text-xl font-semibold text-gray-900 dark:text-white uppercase"
+              ></h3>
+              <span class="ml-3">
+                <label class="fav-container">
+                  <input
+                    type="checkbox"
+                    id="fav"
+                    class="favorite-checkbox"
+                    disabled
+                  />
+                  <svg
+                    height="15px"
+                    id="Layer_1"
+                    version="1.2"
+                    viewBox="0 0 24 24"
+                    width="15px"
+                    xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <path
+                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    />
+                  </svg>
+                </label>
+              </span>
+            </div>
+            <p id="email"></p>
+          </div>
+
+          <!-- CLOSE BUTTON -->
+          <button
+            type="button"
+            onclick="closeModal()"
+            class="absolute right-3 top-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="viewContactModal"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="p-4 md:p-5 space-y-4">
+          <p
+            id="description"
+            class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+          ></p>
+          <div>
+            <div class="relative overflow-x-auto">
+              <table
+                class="w-full text-sm text-left rtl:text-right rounded-lg overflow-hidden text-gray-500 dark:text-gray-400"
+              >
+                <tbody>
+                  <tr class="bg-gray-100 dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      <i class="fa-solid fa-location-dot fa-lg"></i>
+                      Address
+                    </th>
+                    <td id="address" class="px-6 py-4"></td>
+                  </tr>
+                  <tr class="bg-gray-100 dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      <i class="fa-solid fa-phone fa-lg"></i>
+                      Phone
+                    </th>
+                    <td id="phone" class="px-6 py-4"></td>
+                  </tr>
+                  <tr class="bg-gray-100 dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      <i class="fa-solid fa-earth-americas fa-lg"></i>
+                      Website Link
+                    </th>
+                    <td id="webiste-link" class="px-6 py-4"></td>
+                  </tr>
+                  <tr class="bg-gray-100 dark:bg-gray-800">
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      <i class="fa-brands fa-linkedin fa-lg"></i>
+                      LinkedIn Link
+                    </th>
+                    <td id="linkedin-link" class="px-6 py-4"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex justify-between items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600"
+        >
+          <!-- <div>
+            <button
+              data-modal-hide="default-modal"
+              type="button"
+              class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+            >
+              I accept
+            </button>
+            <button
+              data-modal-hide="default-modal"
+              type="button"
+              class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-purple-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            >
+              Decline
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

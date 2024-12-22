@@ -1,5 +1,6 @@
 package com.syncbox.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.syncbox.models.Providers;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,6 +43,7 @@ public class User implements  UserDetails{
     private Providers provider = Providers.SELF;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JsonManagedReference
     private List<Contact> contacts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

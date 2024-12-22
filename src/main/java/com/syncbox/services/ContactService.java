@@ -22,6 +22,10 @@ public interface ContactService {
 //    Getting Operations
     Contact getContactById(String id);
 
+    Contact getContactByUserAndId(User user,String id);
+
+    void deleteContactByUserAndId(User user,String id);
+
     List<Contact> getContactsByUser(User user);
 
     Page<Contact> getContactsByUser(User user, int page, int size, String sortBy, String sortDirection);
