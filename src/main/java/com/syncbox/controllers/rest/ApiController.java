@@ -2,12 +2,17 @@ package com.syncbox.controllers.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syncbox.helper.AuthenticatedUserHelper;
+import com.syncbox.helper.Message;
+import com.syncbox.helper.MessageType;
 import com.syncbox.models.entities.Contact;
 import com.syncbox.models.entities.User;
 import com.syncbox.models.response.ContactResponseDto;
 import com.syncbox.services.ContactService;
 import com.syncbox.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+
+    private Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private final ContactService contactService;
     private final UserService userService;
@@ -42,15 +49,12 @@ public class ApiController {
     }
 
     @DeleteMapping("/contacts/{id}")
-    public ResponseEntity<?> deleteContact(@PathVariable String id, Authentication authentication){
-        System.out.println("hello 1");
+    public ResponseEntity<?> deleteContact(@PathVariable String id, Authentication authentication, HttpSession session){
+        this.logger.info("Deleting contact controller");
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
-        System.out.println("2");
         User user = userService.getUserByEmail(email);
-        System.out.println("3");
-        System.out.println("id is :"+ id);
-        contactService.deleteContactByUserAndId(user,id);
-        System.out.println("4");
-        return ResponseEntity.ok("Contact deleted successfully.");
+        boolean flag = contactService.deleteContactByUserAndId(user,id);
+        session.setAttribute("message", new Message("The contact has been successfully deleted.", MessageType.purple));
+        return ResponseEntity.ok(flag);
     }
 }

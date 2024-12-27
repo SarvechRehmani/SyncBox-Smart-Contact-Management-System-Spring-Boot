@@ -245,9 +245,10 @@
               <button
                 type="submit"
                 id="signInBtn"
+                onclick="showLoadingIcon()"
                 class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
               >
-                <i class="fa-solid fa-plus fa-bounce"></i> Add Contact
+                <i class="fa-solid fa-plus fa-bounce fa-xl"></i> Add Contact
               </button>
             </div>
           </div>
@@ -257,9 +258,15 @@
             <div class="col-span-1"></div>
             <div
               id="img-container"
-              class="col-span-7 md:col-span-5 hidden border border-purple-700 p-3 shadow rounded-md bg-purple-100 dark:bg-gray-800"
+              class="col-span-7 md:col-span-5 hidden border border-purple-700 shadow rounded-md bg-purple-100 dark:bg-gray-800 justify-center items-center"
+              style="width: auto; height: auto"
             >
-              <img src="" id="image-preview" alt="Preview image" />
+              <img
+                src=""
+                id="image-preview"
+                alt="Preview image"
+                class="rounded-md object-contain"
+              />
             </div>
           </div>
         </form>
@@ -277,7 +284,20 @@
         };
         reader.readAsDataURL(file);
         imgContainer.classList.remove("hidden");
+        imgContainer.classList.add("flex");
       });
+
+      function showLoadingIcon() {
+        const submitBtn = document.getElementById("signInBtn");
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin fa-xl"></i> Loading...`;
+        submitBtn.disabled = true; // Disable the button to prevent multiple clicks
+        submitBtn.style.backgroundColor = "rgb(192 132 252)";
+        // Allow the form to submit
+        const form = event.target.closest("form");
+        if (form) {
+          form.submit();
+        }
+      }
     </script>
   </body>
 </html>

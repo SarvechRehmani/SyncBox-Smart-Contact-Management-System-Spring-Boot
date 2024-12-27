@@ -60,8 +60,13 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     @Transactional
-    public void deleteContactByUserAndId(User user, String id) {
-        this.contactRepository.deleteByUserAndContactId(user, id);
+    public boolean deleteContactByUserAndId(User user, String id) {
+       try{
+           this.contactRepository.deleteByUserAndContactId(user, id);
+           return true;
+       } catch (Exception e) {
+           return false;
+       }
     }
 
     @Override

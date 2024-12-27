@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -130,6 +131,30 @@ public class ContactController {
         return ResponseEntity.ok(response); // Return JSON
     }
 
+//    Edit contact View
+    @GetMapping("/edit/{id}")
+    public String editContactView(Model model, String id,  Authentication authentication){
+        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
+        User user = this.userService.getUserByEmail(email);
+        ContactDto contact = this.modelMapper.map(this.contactService.getContactByUserAndId(user,id), ContactDto.class);
+        model.addAttribute("contactDto", contact);
+        return "user/editContact";
+    }
 
-
+//  Edit contact process
+    @PostMapping("/edit/contact")
+    public String editContact(@Valid @ModelAttribute ContactDto contactDto, HttpSession session, Authentication authentication){
+        Contact contact = this.contactService.getContactById(contactDto.getContactId());
+        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
+        User user = this.userService.getUserByEmail(email);
+        if(Objects.equals(contact.getUser().getUserId(), user.getUserId())){
+            Contact contact1 = this.modelMapper.map(contactDto, Contact.class);
+            this.contactService.updateContact(contact1);
+            session.setAttribute("message", new Message("You have successfully edited the contact.", MessageType.green));
+        }else{
+            session.setAttribute("message", new Message("You are not authorized to edit this contact.", MessageType.red));
+            return "redirect:/user/contacts";
+        }
+        return "user/contacts";
+    }
 }

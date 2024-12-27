@@ -24,7 +24,7 @@ public interface ContactService {
 
     Contact getContactByUserAndId(User user,String id);
 
-    void deleteContactByUserAndId(User user,String id);
+    boolean deleteContactByUserAndId(User user,String id);
 
     List<Contact> getContactsByUser(User user);
 

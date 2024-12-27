@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class ContactDto {
 
+    private String contactId;
     @NotBlank(message = "Contact name is required.")
     private String name;
     @Email(regexp = AppConstants.EMAIL_REGEX , message = "Invalid email address.")

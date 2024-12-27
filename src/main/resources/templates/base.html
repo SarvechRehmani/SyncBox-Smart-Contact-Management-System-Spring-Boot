@@ -23,6 +23,11 @@
       referrerpolicy="no-referrer"
     />
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" data-th-href="@{/css/output.css}" />
 
     <!-- CUSTOME CSS -->
@@ -60,9 +65,11 @@
     </div>
 
     <!-- SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"></script>
     <script th:src="@{'/js/script.js'}"></script>
-    <script th:src="@{/js/fetchcontact.js}"></script>
+    <script th:src="@{/js/contact.js}"></script>
     <th:block data-th-replace="${script}"></th:block>
   </body>
 </html>
