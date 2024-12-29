@@ -81,7 +81,7 @@ public class ContactController {
            contact.setCloudinaryPublicId(fileName);
            contact.setPicture(imageUrl);
        }else{
-           contact.setCloudinaryPublicId("");
+           contact.setCloudinaryPublicId(AppConstants.DEFAULT_CLOUDINARY_PUBLIC_ID);
            contact.setPicture(AppConstants.DEFAULT_CONTACT_IMG);
        }
         this.logger.info("Saving Contact to Database");
@@ -133,7 +133,7 @@ public class ContactController {
 
 //    Edit contact View
     @GetMapping("/edit/{id}")
-    public String editContactView(Model model, String id,  Authentication authentication){
+    public String editContactView(@PathVariable String id ,Model model,  Authentication authentication){
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
         User user = this.userService.getUserByEmail(email);
         ContactDto contact = this.modelMapper.map(this.contactService.getContactByUserAndId(user,id), ContactDto.class);
@@ -142,19 +142,55 @@ public class ContactController {
     }
 
 //  Edit contact process
-    @PostMapping("/edit/contact")
+    @PostMapping("/edit")
     public String editContact(@Valid @ModelAttribute ContactDto contactDto, HttpSession session, Authentication authentication){
         Contact contact = this.contactService.getContactById(contactDto.getContactId());
+        String oldPicture = contact.getPicture();
+        String oldCloudinaryPublicId  = contact.getCloudinaryPublicId();
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
         User user = this.userService.getUserByEmail(email);
-        if(Objects.equals(contact.getUser().getUserId(), user.getUserId())){
-            Contact contact1 = this.modelMapper.map(contactDto, Contact.class);
+        if(contact.getUser().getUserId().equals(user.getUserId())){
+            Contact contact1 = mapFieldFromContactDTO(contact, contactDto);
+//            Contact contact1 = this.modelMapper.map(contactDto, Contact.class);
+            System.out.println("user ID matched");
+//            process new profile picture
+            if(!contactDto.getProfileImage().isEmpty()){
+//                Upload new profile picture
+                String fileName = AppConstants.CLOUDINARY_CONTACT_IMAGE_FOLDER + UUID.randomUUID().toString();
+                String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName);
+                contact1.setCloudinaryPublicId(fileName);
+                contact1.setPicture(imageUrl);
+                this.logger.info("New Profile Picture is uploaded.");
+//                Delete old profile picture
+                if (oldPicture != null && !oldPicture.isEmpty() && !oldPicture.equals(AppConstants.DEFAULT_CONTACT_IMG)) {
+                    boolean isDeleted = this.imageService.deleteOldImage(oldCloudinaryPublicId);
+                    if (isDeleted) {
+                        this.logger.info("Old profile picture successfully deleted.");
+                    } else {
+                        this.logger.error("Failed to delete old profile picture.");
+                    }
+                }
+            }
+//            System.out.println(contact1);
             this.contactService.updateContact(contact1);
-            session.setAttribute("message", new Message("You have successfully edited the contact.", MessageType.green));
+            session.setAttribute("message", new Message("You have successfully updated the "+contact1.getName()+" contact.", MessageType.purple));
         }else{
             session.setAttribute("message", new Message("You are not authorized to edit this contact.", MessageType.red));
-            return "redirect:/user/contacts";
         }
-        return "user/contacts";
+        return "redirect:/user/contacts";
+    }
+
+
+
+    public Contact mapFieldFromContactDTO(Contact contact, ContactDto contactDto){
+        contact.setName(contactDto.getName());
+        contact.setEmail(contactDto.getEmail());
+        contact.setPhoneNumber(contactDto.getPhoneNumber());
+        contact.setAddress(contactDto.getAddress());
+        contact.setDescription(contactDto.getDescription());
+        contact.setFavorite(contactDto.isFavorite());
+        contact.setWebsiteLink(contactDto.getWebsiteLink());
+        contact.setLinkedInLink(contactDto.getLinkedInLink());
+        return contact;
     }
 }

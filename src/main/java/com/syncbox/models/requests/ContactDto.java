@@ -24,6 +24,7 @@ public class ContactDto {
     private String phoneNumber;
     private String address;
     private MultipartFile profileImage;
+    private String picture;
     private String description;
     private boolean favorite;
     private String websiteLink;

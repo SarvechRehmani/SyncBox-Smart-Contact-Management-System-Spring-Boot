@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function changeTheme() {
   // Log the current theme for debugging
   let currentTheme = getTheme();
-  console.log("Current theme:", currentTheme);
-
   // Validate currentTheme before adding to the DOM
   if (currentTheme === "dark" || currentTheme === "light") {
     // set to web page
@@ -38,9 +36,6 @@ function changeTheme() {
     } else {
       currentTheme = "dark";
     }
-
-    // Log the new theme
-    console.log("New theme:", currentTheme);
 
     // set theme to localstorage
     setTheme(currentTheme);
@@ -77,4 +72,32 @@ function getTheme() {
     return theme;
   }
   return "light"; // Default to light
+}
+
+// Display iamge in image container in add contact form and update contact form
+let fileInput = document.getElementById("contact-image");
+let imagePreview = document.getElementById("image-preview");
+let imgContainer = document.getElementById("img-container");
+fileInput.addEventListener("change", function (event) {
+  var file = event.target.files[0];
+  let reader = new FileReader();
+  reader.onload = function () {
+    imagePreview.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+  imgContainer.classList.remove("hidden");
+  imgContainer.classList.add("flex");
+});
+
+// Show loading icon on submit button in add contact form and update contact form
+function showLoadingIcon() {
+  const submitBtn = document.getElementById("subBtn");
+  submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin fa-xl"></i> Loading...`;
+  submitBtn.disabled = true; // Disable the button to prevent multiple clicks
+  submitBtn.style.backgroundColor = "rgb(192 132 252)";
+  // Allow the form to submit
+  const form = event.target.closest("form");
+  if (form) {
+    form.submit();
+  }
 }

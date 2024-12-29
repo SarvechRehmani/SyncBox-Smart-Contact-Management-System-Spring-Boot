@@ -4,7 +4,8 @@
   th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
 >
   <head>
-    <title>Add Contact | SyncBox</title>
+    <title th:text="'Update ' + ${contactDto.name} + ' Contact | SyncBox'">
+    </title>
   </head>
   <body>
     <div
@@ -14,20 +15,21 @@
       <div class="container">
         <div th:replace="~{message :: alertBox}"></div>
         <div class="flex flex-col justify-center items-center">
-          <h2 class="text-2xl font-semibold">Add New Contact</h2>
+          <h2 class="text-2xl font-semibold">Update Contact</h2>
           <p class="text-center text-gray-400 dark:text-gray-600 font-semibold">
-            Add a new contact to manage your contact list in the cloud,
-            accessible from anywhere.
+            Modify and update your contact details to keep your contact list
+            accurate and up-to-date, ensuring easy access from anywhere.
           </p>
         </div>
         <form
-          th:action="@{/user/contacts/add}"
+          th:action="@{/user/contacts/edit}"
           th:object="${contactDto}"
           method="POST"
           class="mt-5"
           enctype="multipart/form-data"
           novalidate
         >
+          <input type="hidden" id="contact-id" th:field="*{contactId}" />
           <!-- ROW 1: NAME, EMAIL -->
           <div class="grid grid-cols-2 gap-5 mb-3">
             <!-- Name Field -->
@@ -248,7 +250,8 @@
                 onclick="showLoadingIcon()"
                 class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
               >
-                <i class="fa-solid fa-plus fa-bounce fa-xl"></i> Add Contact
+                <i class="fa-solid fa-pen-to-square fa-bounce fa-xl"></i> Update
+                Contact
               </button>
             </div>
           </div>
@@ -258,10 +261,10 @@
             <div class="col-span-1"></div>
             <div
               id="img-container"
-              class="col-span-7 md:col-span-5 hidden justify-center items-center"
+              class="col-span-7 md:col-span-5 flex justify-center items-center"
             >
               <img
-                src=""
+                th:src="@{*{picture}}"
                 id="image-preview"
                 alt="Preview image"
                 class="rounded-md object-contain w-60 border border-purple-400"

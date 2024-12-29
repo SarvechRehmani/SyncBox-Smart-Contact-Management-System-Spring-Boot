@@ -44,6 +44,7 @@ public class User implements  UserDetails{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
+    @JsonIgnore
     private List<Contact> contacts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
