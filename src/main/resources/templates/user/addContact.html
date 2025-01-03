@@ -129,11 +129,16 @@
                 >Contact Profile</label
               >
               <input
-                class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500"
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500"
                 id="contact-image"
                 type="file"
                 th:field="*{profileImage}"
               />
+              <p
+                th:if="${#fields.hasErrors('profileImage')}"
+                th:errors="*{profileImage}"
+                class="text-sm px-1 text-red-600 dark:text-red-500"
+              ></p>
             </div>
           </div>
           <!-- ROW 3: ADDRESS AND DESCRIPTION -->

@@ -70,9 +70,12 @@ async function fetchContact(contactId) {
   }
 
   if (websiteLink) {
+    var wbLink = websiteLink.startsWith("https://")
+      ? websiteLink
+      : "https://" + websiteLink;
     document.getElementById(
       "webiste-link"
-    ).innerHTML = `<a href="${websiteLink}" target="_blank">${websiteLink}</a>`;
+    ).innerHTML = `<a href="${wbLink}" target="_blank">${wbLink}</a>`;
     document.getElementById("webiste-link").closest("tr").style.display =
       "block";
   } else {
@@ -81,9 +84,12 @@ async function fetchContact(contactId) {
   }
 
   if (linkedInLink) {
+    var lnLink = websiteLink.startsWith("https://")
+      ? websiteLink
+      : "https://" + websiteLink;
     document.getElementById(
       "linkedin-link"
-    ).innerHTML = `<a href="${linkedInLink}" target="_blank">${linkedInLink}</a>`;
+    ).innerHTML = `<a href="${lnLink}" target="_blank">${lnLink}</a>`;
     document.getElementById("linkedin-link").closest("tr").style.display =
       "block";
   } else {

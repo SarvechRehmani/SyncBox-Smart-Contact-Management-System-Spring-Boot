@@ -143,16 +143,21 @@ public class ContactController {
 
 //  Edit contact process
     @PostMapping("/edit")
-    public String editContact(@Valid @ModelAttribute ContactDto contactDto, HttpSession session, Authentication authentication){
+    public String editContact(@Valid @ModelAttribute ContactDto contactDto, BindingResult result, HttpSession session, Authentication authentication){
+        if(result.hasErrors()){
+         return "user/editContact";
+        }
         Contact contact = this.contactService.getContactById(contactDto.getContactId());
+        if(contact == null){
+            session.setAttribute("message", new Message("Contact not found with this id:"+contactDto.getContactId(), MessageType.yellow));
+            return "redirect:/user/contacts";
+        }
         String oldPicture = contact.getPicture();
         String oldCloudinaryPublicId  = contact.getCloudinaryPublicId();
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
         User user = this.userService.getUserByEmail(email);
         if(contact.getUser().getUserId().equals(user.getUserId())){
             Contact contact1 = mapFieldFromContactDTO(contact, contactDto);
-//            Contact contact1 = this.modelMapper.map(contactDto, Contact.class);
-            System.out.println("user ID matched");
 //            process new profile picture
             if(!contactDto.getProfileImage().isEmpty()){
 //                Upload new profile picture
@@ -179,8 +184,6 @@ public class ContactController {
         }
         return "redirect:/user/contacts";
     }
-
-
 
     public Contact mapFieldFromContactDTO(Contact contact, ContactDto contactDto){
         contact.setName(contactDto.getName());

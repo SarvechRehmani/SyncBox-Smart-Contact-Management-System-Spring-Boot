@@ -1,6 +1,7 @@
 package com.syncbox.models.requests;
 
 import com.syncbox.helper.AppConstants;
+import com.syncbox.validators.ValidImage;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,7 @@ public class ContactDto {
     @Size(min = 8, max = 12, message = "Invalid phone number.")
     private String phoneNumber;
     private String address;
+    @ValidImage
     private MultipartFile profileImage;
     private String picture;
     private String description;
