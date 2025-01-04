@@ -34,7 +34,7 @@ public class User implements  UserDetails{
     private String phoneNumber;
     @Column(length = 10000, columnDefinition = "TEXT")
     private String profilePic;
-    private boolean enabled = true;
+    private boolean enabled = false;
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
@@ -50,6 +50,8 @@ public class User implements  UserDetails{
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Role role;
+
+    private String emailToken;
 
 //    UserDetails Methods
     @Override

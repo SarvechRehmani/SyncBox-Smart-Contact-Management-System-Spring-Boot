@@ -2,9 +2,11 @@ package com.syncbox.services.implementation;
 
 import com.syncbox.exceptions.ResourceNotFoundException;
 import com.syncbox.helper.AppConstants;
+import com.syncbox.helper.Helper;
 import com.syncbox.models.entities.Role;
 import com.syncbox.models.entities.User;
 import com.syncbox.repositories.UserRepository;
+import com.syncbox.services.EmailService;
 import com.syncbox.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -22,13 +25,14 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-
+    private final EmailService emailService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public UserServiceImpl(UserRepository userRepository,PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @Override
@@ -38,8 +42,18 @@ public class UserServiceImpl implements UserService {
         user.setUserId(userID);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.setRole(userRole);
-        this.logger.info("User saved");
-        return this.userRepository.save(user);
+//        Generating OTP
+        String otp = Helper.generateOTP();
+        user.setEmailToken(this.passwordEncoder.encode(otp));
+        this.logger.info("Generated OTP: {}", otp);
+
+        this.logger.info("Saving user to the database");
+        User savedUser = this.userRepository.save(user);
+
+        // Send verification link to user's registered email
+        this.logger.info("Sending OTP to user's registered email");
+        this.emailService.sendVerificationEmail(user);
+        return savedUser;
     }
 
     @Override
