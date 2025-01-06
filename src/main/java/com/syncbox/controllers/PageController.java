@@ -83,6 +83,11 @@ public class PageController {
             return "register";
         }
 
+        if(!userDto.getPassword().equals(userDto.getConfirmPassword())){
+            bindingResult.rejectValue("confirmPassword", "error.user", "Passwords do not match");
+            return "register";
+        }
+
 //        Converting Dto to Entity
         User user = this.modelMapper.map(userDto, User.class);
 //        Save to Database
@@ -91,4 +96,6 @@ public class PageController {
         session.setAttribute("message",message);
         return "redirect:/sign-up";
     }
+
+
 }

@@ -1,5 +1,6 @@
 <!-- Siebar for dashboard -->
 <div th:fragment="registeredUserSidebar">
+  <!-- NAVBAR -->
   <nav
     class="fixed top-0 z-40 w-full bg-white border-b shadow xborder-b border-gray-200 dark:bg-gray-900 dark:border-gray-700"
   >
@@ -83,10 +84,19 @@
               <ul class="py-1" role="none">
                 <li>
                   <a
-                    href="#"
+                    th:href="@{/user/dashboard}"
                     class="block px-4 py-2 rounded text-gray-700 hover:bg-purple-100 dark:text-gray-300 dark:hover:bg-purple-600 dark:hover:text-white"
                     role="menuitem"
                     >Dashboard</a
+                  >
+                </li>
+
+                <li>
+                  <a
+                    th:href="@{/user/reset-password}"
+                    class="block px-4 py-2 rounded text-gray-700 hover:bg-purple-100 dark:text-gray-300 dark:hover:bg-purple-600 dark:hover:text-white"
+                    role="menuitem"
+                    >Reset Password</a
                   >
                 </li>
 
@@ -112,6 +122,7 @@
     </div>
   </nav>
 
+  <!-- SIDEBAR -->
   <aside
     id="logo-sidebar"
     class="fixed top-0 left-0 z-[35] w-80 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-900 dark:border-gray-700"
@@ -189,36 +200,14 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
           </a>
         </li>
+
         <li>
           <a
-            href="#"
-            class="flex items-center p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-purple-100 dark:hover:bg-purple-600 dark:hover:bg-opacity-30 rounded-lg group"
-          >
-            <svg
-              class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 18 16"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-              />
-            </svg>
-            <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
+            th:href="@{/logout}"
             class="flex items-center p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-purple-100 dark:hover:bg-purple-600 dark:hover:bg-opacity-30 rounded-lg group"
           >
             <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-            <span class="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
+            <span class="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
           </a>
         </li>
       </ul>

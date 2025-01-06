@@ -77,31 +77,33 @@
                   <!-- PASSWORD FIELDS -->
                   <div class="mb-5 grid grid-cols-2">
                     <div
-                      class="col-span-2 md:col-span-1 mr-0 md:mr-2 mt-2 md:mt-0"
+                      class="col-span-2 md:col-span-1 mr-0 md:mr-2 mt-2 md:mt-0 relative"
                     >
-                      <div class="col-span-1">
-                        <label
-                          for="password"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >Password</label
-                        >
-                        <input
-                          type="password"
-                          id="password"
-                          th:field="*{password}"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
-                          placeholder="Enter password here."
-                          required
-                        />
-                        <p
-                          th:if="${#fields.hasErrors('password')}"
-                          th:errors="*{password}"
-                          class="text-sm px-1 text-red-600 dark:text-red-500"
-                        ></p>
-                      </div>
+                      <label
+                        for="password"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Password</label
+                      >
+                      <input
+                        type="password"
+                        id="password"
+                        th:field="*{password}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                        placeholder="Enter password here."
+                        required
+                      />
+                      <i
+                        class="absolute top-[39px] right-3 text-gray-500 cursor-pointer fa-solid fa-eye"
+                        onclick="togglePasswordVisibility('password', this)"
+                      ></i>
+                      <p
+                        th:if="${#fields.hasErrors('password')}"
+                        th:errors="*{password}"
+                        class="text-sm px-1 text-red-600 dark:text-red-500"
+                      ></p>
                     </div>
                     <div
-                      class="col-span-2 md:col-span-1 ml-0 md:ml-2 mt-2 md:mt-0"
+                      class="col-span-2 md:col-span-1 ml-0 md:ml-2 mt-2 md:mt-0 relative"
                     >
                       <label
                         for="confirmPassword"
@@ -116,6 +118,15 @@
                         placeholder="Confirm password here."
                         required
                       />
+                      <i
+                        class="absolute top-[39px] right-3 text-gray-500 cursor-pointer fa-solid fa-eye"
+                        onclick="togglePasswordVisibility('confirmPassword', this)"
+                      ></i>
+                      <p
+                        th:if="${#fields.hasErrors('confirmPassword')}"
+                        th:errors="*{confirmPassword}"
+                        class="text-sm px-1 text-red-600 dark:text-red-500"
+                      ></p>
                       <span
                         id="confirmPasswordError"
                         class="text-red-500 text-xs"
@@ -181,8 +192,9 @@
                   <!-- SUBMIT BUTTON -->
                   <div class="text-center">
                     <button
+                      id="subBtn"
                       type="submit"
-                      id="signUpBtn"
+                      onclick="showLoadingIcon('subBtn')"
                       class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                     >
                       <i class="fa-solid fa-user-plus"></i> Sign Up

@@ -31,7 +31,12 @@ public class RootController {
         this.logger.info("getting Authenticated User from DB.");
         var user = this.userService.getUserByEmail(email);
 //        If user is not null then set password field null for security purpose.
-        if(user != null) user.setPassword(null);
+        if(user != null) {
+            user.setPassword(null);
+            user.setDob("2002-12-12");
+            user.setGender("male");
+        }
+
 //        Set User in the session.
         model.addAttribute("user", user);
     }

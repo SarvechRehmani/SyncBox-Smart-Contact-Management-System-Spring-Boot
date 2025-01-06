@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService {
         String userID = UUID.randomUUID().toString();
         Role userRole = new Role(AppConstants.USER_ROLE_ID);
         user.setUserId(userID);
+        user.setProfilePic(AppConstants.DEFAULT_PROFILE_PICTURE_FOR_USER);
+        user.setCloudinaryPublicId(AppConstants.DEFAULT_CLOUDINARY_PUBLIC_ID_FOR_USER);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.setRole(userRole);
 //        Generating OTP

@@ -90,14 +90,30 @@ fileInput.addEventListener("change", function (event) {
 });
 
 // Show loading icon on submit button in add contact form and update contact form
-function showLoadingIcon() {
-  const submitBtn = document.getElementById("subBtn");
+function showLoadingIcon(buttonId) {
+  const submitBtn = document.getElementById(buttonId);
+
   submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin fa-xl"></i> Loading...`;
   submitBtn.disabled = true; // Disable the button to prevent multiple clicks
   submitBtn.style.backgroundColor = "rgb(192 132 252)";
+
   // Allow the form to submit
   const form = event.target.closest("form");
   if (form) {
     form.submit();
+  }
+}
+
+// Password visibility toggle
+function togglePasswordVisibility(fieldId, eyeIcon) {
+  const passwordField = document.getElementById(fieldId);
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    eyeIcon.classList.remove("fa-eye");
+    eyeIcon.classList.add("fa-eye-slash");
+  } else {
+    passwordField.type = "password";
+    eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.classList.add("fa-eye");
   }
 }

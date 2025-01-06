@@ -50,23 +50,28 @@
                   </div>
 
                   <div class="mb-5">
-                    <label
-                      for="password"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >Password</label
-                    >
+                    <div class="relative">
+                      <label
+                        for="password"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Password</label
+                      >
 
-                    <input
-                      name="password"
-                      type="password"
-                      id="password"
-                      autocomplete="current-password"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
-                      placeholder="Enter password here."
-                      required
-                    />
+                      <input
+                        name="password"
+                        type="password"
+                        id="password"
+                        autocomplete="current-password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+                        placeholder="Enter password here."
+                        required
+                      />
+                      <i
+                        class="absolute top-[39px] right-3 text-gray-500 cursor-pointer fa-solid fa-eye"
+                        onclick="togglePasswordVisibility('password', this)"
+                      ></i>
+                    </div>
                   </div>
-
                   <div class="mb-5 flex items-center">
                     <input
                       type="checkbox"
@@ -90,8 +95,9 @@
 
                   <div class="text-center">
                     <button
+                      id="subBtn"
                       type="submit"
-                      id="signInBtn"
+                      onclick="showLoadingIcon('subBtn')"
                       class="w-full text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                     >
                       <i class="fa-solid fa-sign-in"></i> Sign In
@@ -138,6 +144,19 @@
         </div>
       </div>
     </section>
-    <script></script>
+    <script>
+      function togglePasswordVisibility(fieldId, eyeIcon) {
+        const passwordField = document.getElementById(fieldId);
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordField.type = "password";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        }
+      }
+    </script>
   </body>
 </html>

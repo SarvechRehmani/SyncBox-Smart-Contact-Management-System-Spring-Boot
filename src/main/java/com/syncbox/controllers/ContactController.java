@@ -81,7 +81,7 @@ public class ContactController {
            contact.setCloudinaryPublicId(fileName);
            contact.setPicture(imageUrl);
        }else{
-           contact.setCloudinaryPublicId(AppConstants.DEFAULT_CLOUDINARY_PUBLIC_ID);
+           contact.setCloudinaryPublicId(AppConstants.DEFAULT_CLOUDINARY_PUBLIC_ID_FOR_CONTACT);
            contact.setPicture(AppConstants.DEFAULT_CONTACT_IMG);
        }
         this.logger.info("Saving Contact to Database");
