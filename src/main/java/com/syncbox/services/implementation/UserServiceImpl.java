@@ -89,6 +89,10 @@ public class UserServiceImpl implements UserService {
         User save = this.userRepository.save(user2);
         return Optional.ofNullable(save);
     }
+    @Override
+    public void updateUserAccountDetails(User user){
+        this.userRepository.save(user);
+    }
 
     @Override
     public void deleteUser(String id) {

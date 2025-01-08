@@ -13,6 +13,8 @@
       id="content"
       class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
     >
+      <div th:replace="~{message :: alertBox}"></div>
+
       <div class="container mx-auto p-6 max-w-5xl">
         <!-- Header Section -->
         <div
@@ -46,22 +48,41 @@
             </button>
 
             <!-- Profile Picture -->
-            <div class="flex flex-col items-center lg:items-start">
-              <div class="relative">
-                <img
-                  th:src="${user.profilePic}"
-                  alt="Profile Picture"
-                  class="w-40 h-40 rounded-full border-4 border-purple-600 object-cover"
-                />
-                <label
-                  for="profile-picture"
-                  class="absolute bottom-0 right-0 bg-purple-700 hover:bg-purple-800 text-white text-xs font-medium px-2 py-1 rounded-full cursor-pointer"
-                >
-                  <i class="fa-solid fa-camera"></i>
-                </label>
-                <input type="file" id="profile-picture" class="hidden" />
+            <form
+              th:object="${request}"
+              th:action="@{/user/update-picture}"
+              enctype="multipart/form-data"
+              method="POST"
+              id="updatePicture"
+            >
+              <div class="flex flex-col items-center lg:items-start">
+                <div class="relative">
+                  <img
+                    th:src="${user.profilePic}"
+                    alt="Profile Picture"
+                    class="w-40 h-40 rounded-full border-4 border-purple-600 object-cover"
+                  />
+                  <label
+                    for="profile-picture"
+                    class="absolute bottom-0 right-0 bg-purple-700 hover:bg-purple-800 text-white text-xs font-medium px-2 py-1 rounded-full cursor-pointer"
+                  >
+                    <i class="fa-solid fa-camera"></i>
+                  </label>
+                  <input
+                    class="hidden"
+                    type="file"
+                    id="profile-picture"
+                    th:field="*{newProfilePicture}"
+                    onChange="updatePicture()"
+                  />
+                </div>
               </div>
-            </div>
+              <p
+                th:if="${#fields.hasErrors('newProfilePicture')}"
+                th:errors="*{newProfilePicture}"
+                class="text-sm px-1 text-red-600 dark:text-red-500"
+              ></p>
+            </form>
 
             <!-- User Information -->
             <div class="col-span-2">
@@ -103,7 +124,11 @@
             Edit Profile
           </h2>
 
-          <form th:object="${user}" method="POST">
+          <form
+            th:action="@{/user/update-profile}"
+            th:object="${user}"
+            method="POST"
+          >
             <!-- ROW 1 NAME, EMAIL -->
             <div class="mb-5 grid grid-cols-2">
               <!-- NAME FIELD -->
@@ -245,7 +270,11 @@
           <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">
             Account Details
           </h3>
-          <form th:action="@{/}" th:object="${user}" method="POST">
+          <form
+            th:action="@{/user/add/account-details}"
+            th:object="${user}"
+            method="POST"
+          >
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <!-- Date of Birth -->
               <div>
@@ -300,6 +329,15 @@
       </div>
     </div>
     <script>
+      // Update Profile Picture
+      function updatePicture() {
+        const updatePictureForm = document.getElementById("updatePicture");
+
+        if (updatePictureForm) {
+          updatePictureForm.submit();
+        }
+      }
+
       // Toggle Profile Edit Mode
       function toggleProfileDetails(event) {
         if (

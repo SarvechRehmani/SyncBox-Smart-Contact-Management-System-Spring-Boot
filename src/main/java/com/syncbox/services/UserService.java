@@ -11,6 +11,7 @@ public interface UserService {
     Optional<User> getUserById(String id);
     User getUserByEmail(String email);
     Optional<User> updateUser(User user);
+    public void updateUserAccountDetails(User user);
     void deleteUser(String id);
     boolean isUserExist(String id);
     boolean isUserExistByEmail(String email);

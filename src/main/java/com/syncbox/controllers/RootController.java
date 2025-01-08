@@ -2,7 +2,9 @@ package com.syncbox.controllers;
 
 import com.syncbox.exceptions.ResourceNotFoundException;
 import com.syncbox.helper.AuthenticatedUserHelper;
+import com.syncbox.models.response.UserResponseDto;
 import com.syncbox.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -17,8 +19,11 @@ public class RootController {
 
     private final Logger logger = LoggerFactory.getLogger(RootController.class);
 
-    public RootController(UserService userService) {
+    private final ModelMapper modelMapper;
+
+    public RootController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @ModelAttribute
@@ -32,12 +37,9 @@ public class RootController {
         var user = this.userService.getUserByEmail(email);
 //        If user is not null then set password field null for security purpose.
         if(user != null) {
-            user.setPassword(null);
-            user.setDob("2002-12-12");
-            user.setGender("male");
+            UserResponseDto userResponseDto =  this.modelMapper.map(user, UserResponseDto.class);
+//          Set User in the session.
+            model.addAttribute("user", userResponseDto);
         }
-
-//        Set User in the session.
-        model.addAttribute("user", user);
     }
 }

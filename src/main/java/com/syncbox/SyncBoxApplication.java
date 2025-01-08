@@ -30,9 +30,6 @@ public class SyncBoxApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(SyncBoxApplication.class, args);
 		System.out.println("project started...");
-
-
-
 	}
 
 	@Override

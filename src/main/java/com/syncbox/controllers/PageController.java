@@ -76,15 +76,15 @@ public class PageController {
     }
 
     @PostMapping("/sign-up")
-    public String register(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, HttpSession session){
+    public String register(@Valid @ModelAttribute UserDto userDto, BindingResult result, HttpSession session){
         System.out.println(userDto);
 //        Validation
-        if(bindingResult.hasErrors()){
+        if(result.hasErrors()){
             return "register";
         }
 
         if(!userDto.getPassword().equals(userDto.getConfirmPassword())){
-            bindingResult.rejectValue("confirmPassword", "error.user", "Passwords do not match");
+            result.rejectValue("confirmPassword", "error.user", "Passwords do not match");
             return "register";
         }
 

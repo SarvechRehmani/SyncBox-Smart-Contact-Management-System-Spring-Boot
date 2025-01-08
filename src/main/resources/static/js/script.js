@@ -103,17 +103,3 @@ function showLoadingIcon(buttonId) {
     form.submit();
   }
 }
-
-// Password visibility toggle
-function togglePasswordVisibility(fieldId, eyeIcon) {
-  const passwordField = document.getElementById(fieldId);
-  if (passwordField.type === "password") {
-    passwordField.type = "text";
-    eyeIcon.classList.remove("fa-eye");
-    eyeIcon.classList.add("fa-eye-slash");
-  } else {
-    passwordField.type = "password";
-    eyeIcon.classList.remove("fa-eye-slash");
-    eyeIcon.classList.add("fa-eye");
-  }
-}

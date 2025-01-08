@@ -185,6 +185,7 @@ public class ContactController {
         return "redirect:/user/contacts";
     }
 
+
     public Contact mapFieldFromContactDTO(Contact contact, ContactDto contactDto){
         contact.setName(contactDto.getName());
         contact.setEmail(contactDto.getEmail());
