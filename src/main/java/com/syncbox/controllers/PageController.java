@@ -97,5 +97,10 @@ public class PageController {
         return "redirect:/sign-up";
     }
 
+    @GetMapping("/verify-email")
+    public String verifyEmail( HttpSession session){
+        System.out.println("OPT Verification page");
+        return "/otpVerification";
+    }
 
 }

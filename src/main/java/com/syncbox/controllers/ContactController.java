@@ -77,7 +77,7 @@ public class ContactController {
         contact.setUser(user);
        if(!contactDto.getProfileImage().isEmpty()){
            String fileName = AppConstants.CLOUDINARY_CONTACT_IMAGE_FOLDER + UUID.randomUUID().toString();
-           String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName);
+           String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName, "contacts");
            contact.setCloudinaryPublicId(fileName);
            contact.setPicture(imageUrl);
        }else{
@@ -162,7 +162,7 @@ public class ContactController {
             if(!contactDto.getProfileImage().isEmpty()){
 //                Upload new profile picture
                 String fileName = AppConstants.CLOUDINARY_CONTACT_IMAGE_FOLDER + UUID.randomUUID().toString();
-                String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName);
+                String imageUrl = this.imageService.uploadImage(contactDto.getProfileImage(), fileName, "contacts");
                 contact1.setCloudinaryPublicId(fileName);
                 contact1.setPicture(imageUrl);
                 this.logger.info("New Profile Picture is uploaded.");

@@ -25,16 +25,24 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String uploadImage(MultipartFile contactImage, String fileName) {
+    public String uploadImage(MultipartFile contactImage, String fileName, String type) {
 
         try {
             byte[] data = new byte[contactImage.getInputStream().available()];
             contactImage.getInputStream().read(data);
-            cloudinary.uploader().upload(data, ObjectUtils.asMap(
-                    "public_id", fileName.substring(AppConstants.CLOUDINARY_CONTACT_IMAGE_FOLDER.length()),
-                    "tags", "contact_images",
-                    "folder", "contact_images"
-            ));
+            if(type.equalsIgnoreCase("contacts")){
+                cloudinary.uploader().upload(data, ObjectUtils.asMap(
+                        "public_id", fileName.substring(AppConstants.CLOUDINARY_CONTACT_IMAGE_FOLDER.length()),
+                        "tags", "contact_images",
+                        "folder", "contact_images"
+                ));
+            }else if(type.equalsIgnoreCase("users")){
+                cloudinary.uploader().upload(data, ObjectUtils.asMap(
+                        "public_id", fileName.substring(AppConstants.CLOUDINARY_USER_PROFILE_IMAGE_FOLDER.length()),
+                        "tags", "user_profiles",
+                        "folder", "user_profiles"
+                ));
+            }
             return this.getUrlFromPublicId(fileName);
         } catch (IOException e) {
             e.printStackTrace();

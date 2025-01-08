@@ -4,18 +4,109 @@
   th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
 >
   <head>
-    <title>Welcome To SyncBox</title>
+    <title>Welcome to SyncBox | Home</title>
   </head>
-  <body>
+  <body class="bg-white dark:bg-gray-900">
     <section id="content">
-      <h1>Welcome to My Website!</h1>
-      <p>This is a sample HTML page.</p>
-      <div th:if="${user}">
-        <h1 th:text="${user.name}"></h1>
-        <h1 th:text="${user.email}"></h1>
-      </div>
-      <a href="https://www.example.com">Visit Example Website</a>
+      <!-- Hero Section -->
+      <section class="bg-purple-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+          <h1 class="text-4xl font-bold sm:text-5xl">Welcome to SyncBox</h1>
+          <p class="mt-4 text-lg sm:text-xl">
+            Manage and sync your files effortlessly with our powerful platform.
+            Streamline your workflow today!
+          </p>
+          <a
+            href="#features"
+            class="mt-8 inline-block bg-white text-purple-700 hover:bg-gray-100 py-3 px-6 rounded-full text-lg font-medium"
+          >
+            Explore Features
+          </a>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Key Features of SyncBox
+          </h2>
+          <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+            Unlock seamless file management, sync, and backup with our intuitive
+            features.
+          </p>
+
+          <div
+            class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12"
+          >
+            <!-- Feature 1 -->
+            <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
+              <i
+                class="fa-solid fa-cloud-upload-alt text-4xl text-purple-700 dark:text-purple-500"
+              ></i>
+              <h3
+                class="mt-4 text-xl font-semibold text-gray-900 dark:text-white"
+              >
+                Cloud Sync
+              </h3>
+              <p class="mt-2 text-gray-600 dark:text-gray-300">
+                Sync your files across multiple devices and access them
+                anywhere, anytime.
+              </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
+              <i
+                class="fa-solid fa-shield-alt text-4xl text-purple-700 dark:text-purple-500"
+              ></i>
+              <h3
+                class="mt-4 text-xl font-semibold text-gray-900 dark:text-white"
+              >
+                Secure Backup
+              </h3>
+              <p class="mt-2 text-gray-600 dark:text-gray-300">
+                Keep your files safe with encrypted backup and restore options.
+              </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
+              <i
+                class="fa-solid fa-users-cog text-4xl text-purple-700 dark:text-purple-500"
+              ></i>
+              <h3
+                class="mt-4 text-xl font-semibold text-gray-900 dark:text-white"
+              >
+                Team Collaboration
+              </h3>
+              <p class="mt-2 text-gray-600 dark:text-gray-300">
+                Work together with your team in real-time on shared files and
+                projects.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section class="bg-purple-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-3xl font-bold sm:text-4xl">Ready to Get Started?</h2>
+          <p class="mt-4 text-lg sm:text-xl">
+            Start syncing your files with SyncBox and experience the future of
+            file management.
+          </p>
+          <a
+            th:href="@{/sign-up}"
+            class="mt-8 inline-block bg-white text-purple-700 hover:bg-gray-100 py-3 px-6 rounded-full text-lg font-medium"
+          >
+            Sign Up Now
+          </a>
+        </div>
+      </section>
     </section>
+
     <script></script>
   </body>
 </html>

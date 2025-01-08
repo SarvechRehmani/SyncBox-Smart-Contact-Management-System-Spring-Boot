@@ -1,17 +1,159 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}">
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
   <head>
-    <title>About Page | SyncBox</title>
+    <title>About | SyncBox</title>
   </head>
   <body>
-    <section id="content"> 
-        <h1>Welcome to My Website!</h1>
-        <p>This is a sample HTML page.</p>
-        <a href="https://www.example.com">Visit Example Website</a>
+    <section
+      id="content"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 my-5 rounded-lg"
+    >
+      <div class="container mx-auto p-6 max-w-5xl">
+        <!-- About Section Header -->
+        <div
+          class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6 text-center border border-gray-200 dark:border-gray-700"
+        >
+          <h1 class="text-4xl font-bold text-gray-800 dark:text-white">
+            About SyncBox
+          </h1>
+          <p class="text-gray-500 dark:text-gray-400 font-medium mt-2">
+            A cloud-based Contact Management System tailored to meet your
+            organizational needs.
+          </p>
+        </div>
+
+        <!-- About Content -->
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12">
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+            >
+              <h2
+                class="text-2xl font-semibold text-gray-800 dark:text-white mb-4"
+              >
+                Our Vision
+              </h2>
+              <p class="text-gray-600 dark:text-gray-400 mb-4 text-justify">
+                At SyncBox, we believe in creating seamless and secure solutions
+                for managing your contacts. Whether you're an individual
+                professional, a small business, or an enterprise, our vision is
+                to provide a platform that adapts to your needs and grows with
+                you.
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Features -->
+          <div class="col-span-12">
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+            >
+              <h2
+                class="text-2xl font-semibold text-gray-800 dark:text-white mb-4"
+              >
+                What We Offer
+              </h2>
+              <ul
+                class="list-disc list-inside text-gray-600 dark:text-gray-400"
+              >
+                <li class="mb-2">
+                  <strong>Cloud Accessibility:</strong> Access your contacts
+                  from anywhere, anytime.
+                </li>
+                <li class="mb-2">
+                  <strong>Data Security:</strong> Robust encryption ensures your
+                  information is safe and private.
+                </li>
+                <li class="mb-2">
+                  <strong>Collaboration:</strong> Share and manage contacts with
+                  your team effortlessly.
+                </li>
+                <li class="mb-2">
+                  <strong>Customizable Organization:</strong> Categorize and
+                  search your contacts with advanced filters.
+                </li>
+                <li class="mb-2">
+                  <strong>Real-Time Syncing:</strong> Keep your contacts updated
+                  across devices and platforms.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Why Choose SyncBox -->
+          <div class="col-span-12">
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+            >
+              <h2
+                class="text-2xl font-semibold text-gray-800 dark:text-white mb-4"
+              >
+                Why Choose SyncBox?
+              </h2>
+              <p class="text-gray-600 dark:text-gray-400 mb-4 text-justify">
+                Managing your contacts can be a hassle, especially when they are
+                scattered across multiple devices and platforms. SyncBox
+                simplifies this process by centralizing your contacts in the
+                cloud, offering you a seamless experience for organizing,
+                sharing, and retrieving contact information.
+              </p>
+              <p class="text-gray-600 dark:text-gray-400 mb-4 text-justify">
+                With features like real-time updates, cross-device syncing, and
+                powerful security, SyncBox ensures that you stay productive and
+                efficient without worrying about losing valuable contact data.
+              </p>
+            </div>
+          </div>
+
+          <!-- Who Can Benefit -->
+          <div class="col-span-12">
+            <div
+              class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+            >
+              <h2
+                class="text-2xl font-semibold text-gray-800 dark:text-white mb-4"
+              >
+                Who Can Benefit?
+              </h2>
+              <p class="text-gray-600 dark:text-gray-400 mb-4">
+                SyncBox is perfect for:
+              </p>
+              <ul
+                class="list-disc list-inside text-gray-600 dark:text-gray-400"
+              >
+                <li>
+                  Individuals looking for an organized personal address book.
+                </li>
+                <li>Small businesses managing client and supplier contacts.</li>
+                <li>Large enterprises handling extensive contact databases.</li>
+                <li>Teams needing collaboration on shared contact lists.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call-to-Action -->
+        <div class="text-center mt-6">
+          <a
+            href="/features"
+            class="text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+          >
+            <i class="fa-solid fa-newspaper"></i>
+            Explore Features
+          </a>
+          <a
+            href="/contact"
+            class="ml-3 text-white disabled:cursor-not-allowed bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-purple-900"
+          >
+            <i class="fa-solid fa-address-book"></i>
+            Contact Us
+          </a>
+        </div>
       </div>
     </section>
-    <script>
-      
-    </script>
+    <script></script>
   </body>
 </html>

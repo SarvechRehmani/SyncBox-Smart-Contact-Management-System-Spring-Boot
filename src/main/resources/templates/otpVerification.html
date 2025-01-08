@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Verify OTP | SyncBox</title>
+  </head>
+  <body>
+    <section
+      id="content"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-9 rounded-lg"
+    >
+      <div class="container mx-auto p-6 max-w-5xl">
+        <!-- Header Section -->
+        <div
+          class="bg-white border dark:border-gray-800 dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6"
+        >
+          <h2
+            class="text-3xl font-bold text-gray-800 dark:text-white text-center"
+          >
+            OTP Verification
+          </h2>
+          <p
+            class="text-center text-gray-500 dark:text-gray-400 font-medium mt-2"
+          >
+            Enter the 6-digit code sent to your email
+            <span class="text-purple-700">sa****99@gmail.com</span>.
+          </p>
+          <!-- Inform about OTP and verification link -->
+          <p
+            class="text-center text-gray-500 dark:text-gray-400 font-medium mt-2"
+          >
+            If you didn't receive the email, please check your spam folder or
+            request a new verification link.
+          </p>
+        </div>
+        <div class="grid grid-cols-12">
+          <div class="col-span-3"></div>
+          <div class="col-span-6">
+            <div
+              class="bg-white border dark:border-gray-800 dark:bg-gray-800 p-8 rounded-lg shadow-lg w-[100%]"
+            >
+              <div
+                class="flex justify-center gap-2"
+                onpaste="handlePaste(event)"
+              >
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 0)"
+                  onkeydown="handleKeydown(event, 0)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 1)"
+                  onkeydown="handleKeydown(event, 1)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 2)"
+                  onkeydown="handleKeydown(event, 2)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 3)"
+                  onkeydown="handleKeydown(event, 3)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 4)"
+                  onkeydown="handleKeydown(event, 4)"
+                />
+                <input
+                  type="text"
+                  maxlength="1"
+                  placeholder="*"
+                  class="otp-input w-12 h-12 border border-purple-300 rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-black dark:text-white dark:bg-gray-700"
+                  oninput="handleInput(event, 5)"
+                  onkeydown="handleKeydown(event, 5)"
+                />
+              </div>
+              <button
+                class="w-full mt-6 text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 font-semibold focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+              >
+                Verify
+              </button>
+              <!-- Resend Link Button -->
+              <div class="text-center mt-4">
+                <button
+                  class="text-purple-500 hover:text-purple-700 font-medium focus:outline-none"
+                  onclick="resetLink()"
+                >
+                  Resend Verification Link
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      // Allow only digits
+      function handleInput(event, index) {
+        const inputs = document.querySelectorAll(".otp-input");
+        const currentInput = event.target;
+        const value = currentInput.value;
+        if (!/\d/.test(value)) {
+          currentInput.value = "";
+          return;
+        }
+        // Move to the next input
+        if (value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      }
+
+      // Handle backspace to move to the previous input
+      function handleKeydown(event, index) {
+        const inputs = document.querySelectorAll(".otp-input");
+        if (
+          event.key === "Backspace" &&
+          index > 0 &&
+          inputs[index].value === ""
+        ) {
+          inputs[index - 1].focus();
+        }
+      }
+      // Only allow digits and paste within the limit
+      function handlePaste(event) {
+        const data = event.clipboardData.getData("text");
+        const inputs = document.querySelectorAll(".otp-input");
+        if (/^\d{1,6}$/.test(data)) {
+          for (let i = 0; i < data.length && i < inputs.length; i++) {
+            inputs[i].value = data[i];
+          }
+          // Focus the last non-empty input
+          inputs[Math.min(data.length, inputs.length) - 1].focus();
+        }
+        event.preventDefault();
+      }
+
+      // Reset the OTP and inform user
+      function resetLink() {
+        alert(
+          "A new verification link has been sent to your email. Please check your inbox."
+        );
+        // Reset OTP input fields
+        const inputs = document.querySelectorAll(".otp-input");
+        inputs.forEach((input) => (input.value = ""));
+        inputs[0].focus(); // Focus on the first input field
+      }
+    </script>
+  </body>
+</html>

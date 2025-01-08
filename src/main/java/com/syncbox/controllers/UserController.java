@@ -1,5 +1,6 @@
 package com.syncbox.controllers;
 
+import com.syncbox.helper.AppConstants;
 import com.syncbox.helper.AuthenticatedUserHelper;
 import com.syncbox.helper.Message;
 import com.syncbox.helper.MessageType;
@@ -8,6 +9,7 @@ import com.syncbox.models.requests.ContactDto;
 import com.syncbox.models.requests.ResetPassword;
 import com.syncbox.models.requests.UserProfilePictureRequest;
 import com.syncbox.models.response.UserResponseDto;
+import com.syncbox.services.ImageService;
 import com.syncbox.services.UserService;
 import com.syncbox.validators.ValidImage;
 import jakarta.servlet.http.HttpSession;
@@ -23,17 +25,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final ImageService imageService;
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, ImageService imageService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.imageService = imageService;
     }
 
     // User Dashboard
@@ -59,12 +65,21 @@ public class UserController {
         }
         String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
         User authenticateUser = this.userService.getUserByEmail(email);
+        String oldCloudinaryPublicId = authenticateUser.getCloudinaryPublicId();
         if(request.getNewProfilePicture().isEmpty()){
             session.setAttribute("message", new Message("Please select a picture.", MessageType.yellow));
+            return "redirect:/user/profile";
+        }else{
+            String fileName = AppConstants.CLOUDINARY_USER_PROFILE_IMAGE_FOLDER + UUID.randomUUID().toString();
+            String imageUrl = this.imageService.uploadImage(request.getNewProfilePicture(), fileName,"users");
+            authenticateUser.setCloudinaryPublicId(fileName);
+            authenticateUser.setProfilePic(imageUrl);
         }
-
-        System.out.println(request.getNewProfilePicture().getOriginalFilename());
-//        this.userService.updateUserAccountDetails(authenticateUser);
+        this.userService.updateUserAccountDetails(authenticateUser);
+        if(!oldCloudinaryPublicId.equals(AppConstants.DEFAULT_CLOUDINARY_PUBLIC_ID_FOR_USER)){
+            this.imageService.deleteOldImage(oldCloudinaryPublicId);
+            this.logger.info("Old profile image has been deleted successfully..");
+        }
         session.setAttribute("message", new Message("Profile picture updated successfully.", MessageType.green));
         return "redirect:/user/profile";
     }

@@ -14,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class UserProfilePictureRequest {
 
-//    @NotBlank(message = "can not be null or empty")
-//    private String fileName;
     @ValidImage
     private MultipartFile newProfilePicture;
 }

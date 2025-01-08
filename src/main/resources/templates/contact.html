@@ -1,1 +1,146 @@
-<h1>Contact</h1>
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Contact Us | SyncBox</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section
+      id="content"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
+    >
+      <div class="container mx-auto p-6 max-w-5xl">
+        <!-- Contact Us Section Header -->
+        <div
+          class="bg-white  dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6 text-center border border-gray-200 dark:border-gray-700"
+        >
+          <h1 class="text-4xl font-bold text-gray-800 dark:text-white">
+            Contact Us
+          </h1>
+          <p class="text-gray-500 dark:text-gray-400 font-medium mt-2">
+            Have questions or need assistance? Reach out to us anytime.
+          </p>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="grid grid-cols-12 gap-6 mb-6">
+          <!-- Phone -->
+          <div class="col-span-12 sm:col-span-6 lg:col-span-4 text-center">
+            <div
+              class="flex justify-center items-center flex-col bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg h-[200px] border border-gray-200 dark:border-gray-700"
+            >
+              <i class="fas fa-phone-alt text-purple-700 text-4xl mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
+                Call Us
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400">+1 (123) 456-7890</p>
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="col-span-12 sm:col-span-6 lg:col-span-4 text-center">
+            <div
+              class="flex justify-center items-center flex-col bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg h-[200px] border border-gray-200 dark:border-gray-700"
+            >
+              <i class="fas fa-envelope text-purple-700 text-4xl mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
+                Email Us
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                support@syncbox.com
+              </p>
+            </div>
+          </div>
+          <!-- Address -->
+          <div class="col-span-12 sm:col-span-6 lg:col-span-4 text-center">
+            <div
+              class="flex justify-center items-center flex-col bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg h-[200px] border border-gray-200 dark:border-gray-700"
+            >
+              <i
+                class="fas fa-map-marker-alt text-purple-700 text-4xl mb-4"
+              ></i>
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-white">
+                Visit Us
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                123 SyncBox Street, Suite 100<br />
+                Cloud City, CC 12345
+              </p>
+            </div>
+          </div>
+        </div>
+
+       <!-- Contact Form -->
+      <div class="grid grid-cols-12">
+        <div class="col-span-12">
+          <form
+            th:action="@{/contact-us}"
+            method="POST"
+            class="bg-white p-6 rounded-lg shadow-md  dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+          >
+            <div class="mb-4">
+              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                class="mt-1 block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                class="mt-1 block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                placeholder="Enter subject"
+                class="mt-1 block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                required
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your Message</label>
+              <textarea
+                id="message"
+                rows="5"
+                placeholder="Enter your message"
+                class="mt-1 block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                required
+              ></textarea>
+            </div>
+
+            <div class="flex justify-end mt-4">
+              <button
+                type="submit"
+                class="text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                
+              >
+                <i class="fa-solid fa-paper-plane"></i> Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+    <script></script>
+  </body>
+</html>
