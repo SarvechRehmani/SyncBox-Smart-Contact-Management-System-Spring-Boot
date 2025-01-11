@@ -8,10 +8,14 @@ import com.syncbox.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 public class PageController {
@@ -92,15 +96,51 @@ public class PageController {
         User user = this.modelMapper.map(userDto, User.class);
 //        Save to Database
         User user2 = this.userService.saveUser(user);
-        Message message = new Message("Registration Successfully", MessageType.purple);
+        session.setAttribute("email", user2.getEmail());
+        Message message = new Message("Registration Successfully.", MessageType.purple);
         session.setAttribute("message",message);
         return "redirect:/sign-up";
     }
 
     @GetMapping("/verify-email")
-    public String verifyEmail( HttpSession session){
-        System.out.println("OPT Verification page");
+    public String verifyEmail(@RequestParam(required = false) String token, String opt,HttpSession session){
+        String email = (String) session.getAttribute("email");
+        if(email == null || email.isEmpty()){
+            return "error-page";
+        }
+        if(token != null){
+            boolean isVerified = this.userService.verifyEmail(email, token, null);
+            Message message;
+            if(isVerified){
+                message = new Message("Email verified successfully. You can now Sign-in", MessageType.green);
+                session.removeAttribute("email");
+            }else{
+                message = new Message("Email verification failed.", MessageType.red);
+            }
+            session.setAttribute("message",message);
+        }
         return "/otpVerification";
+    }
+
+    @PostMapping("/verify-email")
+    public String verifyOTP(@RequestBody Map<String, String> payload, HttpSession session) {
+        String otp = payload.get("otp");
+        System.out.println(otp);
+        String email = (String) session.getAttribute("email");
+        if(email == null || email.isEmpty()){
+            return "error-page";
+        }
+        boolean isVerified = this.userService.verifyEmail(email,null, otp);
+
+        Message message;
+        if(isVerified){
+            message = new Message("Email verified successfully. You can now Sign-in", MessageType.green);
+            session.removeAttribute("email");
+        }else{
+            message = new Message("Email verification failed.", MessageType.red);
+        }
+        session.setAttribute("message",message);
+        return "redirect:/sign-in";
     }
 
 }

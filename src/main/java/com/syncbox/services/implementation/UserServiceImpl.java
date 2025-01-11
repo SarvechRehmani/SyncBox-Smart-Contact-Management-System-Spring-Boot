@@ -116,4 +116,32 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUser() {
         return this.userRepository.findAll();
     }
+
+    @Override
+    public boolean verifyEmail(String email, String token, String otp) {
+        User user = this.getUserByEmail(email);
+       if(user != null){
+           if(token != null && !token.isEmpty()){
+               this.logger.error("Verification using link.");
+               if (token.equals(user.getEmailToken())) {
+                   user.setEnabled(true);
+                   user.setEmailVerified(true);
+                   this.userRepository.save(user);
+                   return true;
+               }
+           }else if(otp != null && otp.length() == 6){
+               System.out.println(otp);
+               this.logger.error("Verification using OTP.");
+               if(this.passwordEncoder.matches(otp, user.getEmailToken())){
+                   user.setEnabled(true);
+                   user.setEmailVerified(true);
+                   this.userRepository.save(user);
+                   return true;
+               }
+           }else{
+               this.logger.error("Invalid verification token.");
+           }
+       }
+        return false;
+    }
 }

@@ -95,7 +95,8 @@
                 />
               </div>
               <button
-                class="w-full mt-6 text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 font-semibold focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                class="w-full mt-6 text-white disabled:cursor-not-allowed bg-purple-700 hover:bg-purple-800 font-semibold focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                onclick="submitOTP()"
               >
                 Verify
               </button>
@@ -156,13 +157,47 @@
 
       // Reset the OTP and inform user
       function resetLink() {
-        alert(
-          "A new verification link has been sent to your email. Please check your inbox."
-        );
         // Reset OTP input fields
         const inputs = document.querySelectorAll(".otp-input");
         inputs.forEach((input) => (input.value = ""));
         inputs[0].focus(); // Focus on the first input field
+      }
+
+      function submitOTP() {
+        const inputs = document.querySelectorAll(".otp-input");
+        let otp = "";
+
+        // Concatenate the values of all input fields
+        inputs.forEach((input) => {
+          otp += input.value;
+        });
+
+        // Validate OTP length
+        if (otp.length !== inputs.length) {
+          alert("Please enter all 6 digits of the OTP.");
+          return;
+        }
+
+        // Send OTP to backend
+        fetch("/verify-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ otp: otp }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("OTP Verified Successfully!");
+              // Redirect or handle success
+            } else {
+              alert("Invalid OTP. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error verifying OTP:", error);
+            alert("An error occurred. Please try again later.");
+          });
       }
     </script>
   </body>

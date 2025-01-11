@@ -13,15 +13,18 @@ import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
 
-    private Logger logger = LoggerFactory.getLogger(ApiController.class);
+    private final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private final ContactService contactService;
     private final UserService userService;
@@ -57,4 +60,6 @@ public class ApiController {
         session.setAttribute("message", new Message("The contact has been successfully deleted.", MessageType.purple));
         return ResponseEntity.ok(flag);
     }
+
+
 }

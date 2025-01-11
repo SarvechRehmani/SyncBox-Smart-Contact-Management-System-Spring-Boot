@@ -16,4 +16,5 @@ public interface UserService {
     boolean isUserExist(String id);
     boolean isUserExistByEmail(String email);
     List<User> getAllUser();
+    boolean verifyEmail(String email, String token, String otp);
 }
