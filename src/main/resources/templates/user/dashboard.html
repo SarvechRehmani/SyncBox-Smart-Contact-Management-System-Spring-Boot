@@ -22,7 +22,7 @@
           class="bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium flex items-center"
         >
           <i class="fa-solid fa-user-circle mr-2"></i>
-          Profile
+          <span class="hidden md:inline-block">Profile</span>
         </a>
       </div>
 
@@ -39,7 +39,7 @@
             Total Contacts
           </h2>
           <p class="mt-2 text-gray-600 dark:text-gray-300">You have</p>
-          <h2 class="text-4xl font-bold">0</h2>
+          <h2 class="text-4xl font-bold" th:text="${contactCount}">0</h2>
           <p>contacts.</p>
         </div>
 

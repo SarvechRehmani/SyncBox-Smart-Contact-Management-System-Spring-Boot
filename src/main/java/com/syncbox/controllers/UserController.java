@@ -44,8 +44,11 @@ public class UserController {
 
     // User Dashboard
     @GetMapping("/dashboard")
-    public String userDashboard(Authentication authentication) {
+    public String userDashboard(Model model, Authentication authentication) {
         // System.out.println("User Dashboard : user : "+email);
+        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
+        User user = this.userService.getUserByEmail(email);
+        model.addAttribute("contactCount", user.getContacts().size());
         return "user/dashboard";
     }
 

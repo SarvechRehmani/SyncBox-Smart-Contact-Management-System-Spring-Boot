@@ -20,13 +20,13 @@ const instanceOptions = {
 
 const contactModal = new Modal($viewContactModal, options, instanceOptions);
 
-const baseURL = "http://localhost:8080/api";
+const baseURL = "http://192.168.100.7:8080/api";
 
+// Get single contact
 async function fetchContact(contactId) {
   const response = await (
     await fetch(`${baseURL}/contacts/${contactId}`)
   ).json();
-
   // Destructure necessary variables from the response
   const {
     name,
@@ -99,6 +99,15 @@ async function fetchContact(contactId) {
   openModal();
 }
 
+function openModal() {
+  contactModal.show();
+}
+
+function closeModal() {
+  contactModal.hide();
+}
+
+// Delete contact
 function deleteContact(id, contactName) {
   const isDarkMode = document.documentElement.classList.contains("dark");
   Swal.fire({
@@ -134,10 +143,62 @@ function deleteContact(id, contactName) {
   });
 }
 
-function openModal() {
-  contactModal.show();
+// Update favorite status
+function updateFavoriteStatus(contactId) {
+  console.log("updateFavoriteStatus");
+  const url = `contacts/update-favorite/${contactId}`;
+
+  fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to update favorite status");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Favorite status updated:", data);
+    })
+    .catch((error) => {
+      console.error("Error updating favorite status:", error);
+    });
 }
 
-function closeModal() {
-  contactModal.hide();
+// Export Contact in Excel
+function exportContacts() {
+  TableToExcel.convert(document.getElementById("table"), {
+    name: "contacts.xlsx",
+    sheet: { name: "Sheet 1" },
+  });
 }
+
+// Heart Shape Checkbox Javascript
+document.addEventListener("DOMContentLoaded", () => {
+  // Select all favorite checkboxes
+  const favoriteCheckboxes = document.querySelectorAll(".favorite-checkbox");
+
+  favoriteCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", (event) => {
+      const contactId = event.target.getAttribute("data-contact-id");
+
+      // Call the update function
+      updateFavoriteStatus(contactId);
+    });
+  });
+});
+
+// Drop down page size selection
+document.querySelectorAll("#selectSizeAction a").forEach((item) => {
+  item.addEventListener("click", (event) => {
+    event.preventDefault();
+    const selectedValue = item.getAttribute("data-value");
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("size", selectedValue);
+    currentUrl.searchParams.set("page", 0); // Reset to the first page
+    window.location.href = currentUrl.toString();
+  });
+});

@@ -11,13 +11,13 @@
       id="content"
       class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[95%] m-auto border-gray-200 dark:border-gray-700 mt-14 rounded-lg"
     >
-      <div th:replace="~{user/modal :: viewContactModal}"></div>
       <div class="flex flex-col justify-center items-center">
         <h2 class="text-2xl font-semibold">Manage Contacts</h2>
         <p class="text-center text-gray-400 dark:text-gray-600 font-semibold">
           View and manage the details of your contacts.
         </p>
       </div>
+
       <div th:replace="~{message :: alertBox}"></div>
       <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
@@ -91,6 +91,7 @@
             </ul>
           </div>
         </div>
+
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">
           <div
@@ -302,7 +303,7 @@
               <!-- ACTION -->
               <td class="px-6 py-4 flex gap-2">
                 <button
-                  th:onclick="fetchContact([[${contact.contactId}]])"
+                  th:onclick="f([[${contact.contactId}]])"
                   class="p-2 font-medium text-purple-600 hover:text-purple-400 dark:text-purple-500 dark:hover:text-purple-400"
                 >
                   <i class="fa-xl fa-solid fa-eye"></i>
@@ -335,7 +336,7 @@
           </tbody>
         </table>
       </div>
-
+      <div th:replace="~{user/modal :: viewContactModal}"></div>
       <!-- Pagination -->
       <div class="flex justify-center">
         <nav aria-label="Page navigation example" class="mt-10">
@@ -399,70 +400,23 @@
           </ul>
         </nav>
       </div>
-      <button class="py-4 px-2 bg-purple-500" onclick="exportContacts()">
-        Click here
-      </button>
+      <div class="flex justify-end mt-4">
+        <button
+          onclick="exportContacts()"
+          class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        >
+          <i class="fa-solid fa-file-export"></i>
+          <span class="hidden md:inline-block">Export As Excel</span>
+        </button>
+      </div>
     </div>
+
+    <script th:src="@{/js/contact.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
     <script>
-      function exportContacts() {
-        TableToExcel.convert(document.getElementById("table"), {
-          name: "contacts.xlsx",
-          sheet: { name: "Sheet 1" },
-        });
+      function f(contactId) {
+        fetchContact(contactId);
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        // Select all favorite checkboxes
-        const favoriteCheckboxes =
-          document.querySelectorAll(".favorite-checkbox");
-
-        favoriteCheckboxes.forEach((checkbox) => {
-          checkbox.addEventListener("change", (event) => {
-            const contactId = event.target.getAttribute("data-contact-id");
-
-            // Call the update function
-            updateFavoriteStatus(contactId);
-          });
-        });
-      });
-
-      function updateFavoriteStatus(contactId) {
-        console.log("updateFavoriteStatus");
-        const url = `contacts/update-favorite/${contactId}`;
-
-        fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to update favorite status");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Favorite status updated:", data);
-          })
-          .catch((error) => {
-            console.error("Error updating favorite status:", error);
-          });
-      }
-
-      document.querySelectorAll("#selectSizeAction a").forEach((item) => {
-        item.addEventListener("click", (event) => {
-          event.preventDefault();
-          const selectedValue = item.getAttribute("data-value");
-          const currentUrl = new URL(window.location.href);
-          currentUrl.searchParams.set("size", selectedValue);
-          currentUrl.searchParams.set("page", 0); // Reset to the first page
-          window.location.href = currentUrl.toString();
-        });
-      });
-      // $("#exportBtn").click(
-      //   )
-      // });
     </script>
   </body>
 </html>
