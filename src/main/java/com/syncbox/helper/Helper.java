@@ -1,7 +1,6 @@
 package com.syncbox.helper;
 
 import com.syncbox.models.entities.User;
-import org.springframework.beans.factory.annotation.Value;
 
 public class Helper {
 
@@ -16,8 +15,8 @@ public class Helper {
     }
 
 
-    public static String getHTMLContent(User user) {
-        return " <body\n" +
+    public static String getHTMLContent(User user, String otp) {
+        return  " <body\n" +
                 "    style=\"\n" +
                 "      margin: 0;\n" +
                 "      padding: 0;\n" +
@@ -71,6 +70,18 @@ public class Helper {
                 "          create an account of\n" +
                 "          <a href='"+AppConstants.DOMAIN_NAME_URL+"' style='color: #6633ff; text-decoration: none'>SyncBox</a>,\n" +
                 "          you can safely delete this email.\n" +
+                "        </p>\n" +
+                "        <!-- OTP Display Section -->\n" +
+                "        <p\n" +
+                "          style=\"\n" +
+                "            font-size: 18px;\n" +
+                "            font-weight: bold;\n" +
+                "            color: #333;\n" +
+                "            margin: 16px 0;\n" +
+                "            text-align: center;\n" +
+                "          \"\n" +
+                "        >\n" +
+                "          Your OTP Code: <span style=\"color: #6633ff\">" + otp + "</span>\n" +
                 "        </p>\n" +
                 "        <a\n" +
                 "          href='"+ generateVerificationLink(user.getEmailToken()) +"'" +
@@ -139,6 +150,7 @@ public class Helper {
                 "        To stop receiving these emails, you can unsubscribe at any time.\n" +
                 "      </p>\n" +
                 "    </div>\n" +
-                "  </body>\n" ;
+                "  </body>\n";
+
     }
 }

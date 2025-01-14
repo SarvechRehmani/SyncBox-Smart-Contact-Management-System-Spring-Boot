@@ -12,6 +12,7 @@
       class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-9 rounded-lg"
     >
       <div class="container mx-auto p-6 max-w-5xl">
+        <div th:replace="~{message :: alertBox}"></div>
         <!-- Header Section -->
         <div
           class="bg-white border dark:border-gray-800 dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6"
@@ -25,7 +26,7 @@
             class="text-center text-gray-500 dark:text-gray-400 font-medium mt-2"
           >
             Enter the 6-digit code sent to your email
-            <span class="text-purple-700">sa****99@gmail.com</span>.
+            <span class="text-purple-700" th:text="${email}"></span>.
           </p>
           <!-- Inform about OTP and verification link -->
           <p
@@ -164,6 +165,7 @@
       }
 
       function submitOTP() {
+        const isDarkMode = document.documentElement.classList.contains("dark");
         const inputs = document.querySelectorAll(".otp-input");
         let otp = "";
 
@@ -188,15 +190,30 @@
         })
           .then((response) => {
             if (response.ok) {
-              alert("OTP Verified Successfully!");
-              // Redirect or handle success
+              Swal.fire({
+                title: "OTP Verified Successfully!",
+                Text: "You can Sign-in now.",
+                icon: "success",
+                background: isDarkMode ? "#374151" : "#fff",
+                backdrop: "rgba(13, 18, 28, 0.7)",
+              });
+              window.location.href = "http://localhost:8080/sign-in";
             } else {
-              alert("Invalid OTP. Please try again.");
+              Swal.fire({
+                title: "Invalid OTP. Please try again.",
+                icon: "error",
+                background: isDarkMode ? "#374151" : "#fff",
+                backdrop: "rgba(13, 18, 28, 0.7)",
+              });
             }
           })
           .catch((error) => {
-            console.error("Error verifying OTP:", error);
-            alert("An error occurred. Please try again later.");
+            Swal.fire({
+              title: "An error occurred. Please try again later. " + error,
+              icon: "error",
+              background: isDarkMode ? "#374151" : "#fff",
+              backdrop: "rgba(13, 18, 28, 0.7)",
+            });
           });
       }
     </script>

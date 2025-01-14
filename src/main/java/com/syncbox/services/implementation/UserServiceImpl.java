@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
         // Send verification link to user's registered email
         this.logger.info("Sending OTP to user's registered email");
-        this.emailService.sendVerificationEmail(user);
+        this.emailService.sendVerificationEmail(user, otp);
         return savedUser;
     }
 
@@ -137,9 +136,11 @@ public class UserServiceImpl implements UserService {
                    user.setEmailVerified(true);
                    this.userRepository.save(user);
                    return true;
+               }else{
+                   this.logger.error("Invalid OTP.");
                }
            }else{
-               this.logger.error("Invalid verification token.");
+               this.logger.error("Invalid verification OTP.");
            }
        }
         return false;

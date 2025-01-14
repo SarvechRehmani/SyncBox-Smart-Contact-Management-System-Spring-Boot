@@ -8,7 +8,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -28,9 +27,9 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendVerificationEmail(User user) {
+    public void sendVerificationEmail(User user, String otp) {
 
-        String content = Helper.getHTMLContent(user);
+        String content = Helper.getHTMLContent(user, otp);
 
 //      Create the email and set required information -- with HTML
         logger.info("sending verification email");

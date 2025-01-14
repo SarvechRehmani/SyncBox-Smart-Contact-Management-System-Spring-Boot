@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}"
+>
+  <head>
+    <title>Access Denied | SyncBox</title>
+  </head>
+  <body>
+    <section
+      id="content"
+      class="bg-white dark:bg-gray-900 p-8 border-2 w-full cm:w-[75%] m-auto border-gray-200 dark:border-gray-700 mt-9 rounded-lg"
+    >
+      <div class="container mx-auto p-6 max-w-5xl text-center">
+        <div
+          class="bg-white border dark:border-gray-800 dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-6"
+        >
+          <h2 class="text-3xl font-bold text-gray-800 dark:text-white">
+            Access Denied
+          </h2>
+          <p class="text-gray-500 dark:text-gray-400 font-medium mt-2">
+            It looks like you haven't registered yet.
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 font-medium mt-2">
+            Please
+            <a th:href="@{/sign-up}" class="text-purple-700 hover:underline"
+              >register</a
+            >
+            first to verify your email.
+          </p>
+          <p class="text-gray-500 dark:text-gray-400 font-medium mt-2">
+            If this was a mistake,
+            <a th:href="@{/}" class="text-purple-700 hover:underline"
+              >go back to the homepage</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+    <script></script>
+  </body>
+</html>

@@ -121,6 +121,98 @@
         </div>
       </div>
 
+      <div class="hidden">
+        <table id="table" data-f-sz="12" data-cols-width="25,25,25">
+          <thead>
+            <tr>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Name
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Email
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Phone
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Favorite
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Website Link
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Linked-In Link
+              </td>
+              <td
+                data-f-sz="14"
+                data-f-bold="true"
+                data-f-color="FFFFFF"
+                data-fill-color="9061F9"
+              >
+                Description
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              th:each="contact : ${pageContacts.getContent()}"
+              th:object="${contact}"
+            >
+              <td th:text="*{name}"></td>
+              <td th:text="*{email}"></td>
+              <td th:text="*{phoneNumber}"></td>
+              <td th:text="*{favorite}"></td>
+              <td>
+                <a
+                  th:href="@{*{websiteLink != '' ? @sessionHelper.getCorrectUrl(websiteLink) : '#'}}"
+                  th:target="*{websiteLink != '' ? '_blank' : ''}"
+                  th:text="*{websiteLink != '' ? @sessionHelper.getCorrectUrl(websiteLink) : '#'}"
+                >
+                </a>
+              </td>
+              <td>
+                <a
+                  th:href="@{*{linkedInLink != '' ? @sessionHelper.getCorrectUrl(linkedInLink) : '#'}}"
+                  th:target="*{linkedInLink != '' ? '_blank' : ''}"
+                  th:text="*{linkedInLink != '' ? @sessionHelper.getCorrectUrl(linkedInLink) : '#'}"
+                ></a>
+              </td>
+              <td th:text="*{description}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="relative overflow-x-auto shadow-md">
         <table
           class="overflow-hidden rounded-xl w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -307,8 +399,18 @@
           </ul>
         </nav>
       </div>
+      <button class="py-4 px-2 bg-purple-500" onclick="exportContacts()">
+        Click here
+      </button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
     <script>
+      function exportContacts() {
+        TableToExcel.convert(document.getElementById("table"), {
+          name: "contacts.xlsx",
+          sheet: { name: "Sheet 1" },
+        });
+      }
       document.addEventListener("DOMContentLoaded", () => {
         // Select all favorite checkboxes
         const favoriteCheckboxes =
@@ -358,6 +460,9 @@
           window.location.href = currentUrl.toString();
         });
       });
+      // $("#exportBtn").click(
+      //   )
+      // });
     </script>
   </body>
 </html>

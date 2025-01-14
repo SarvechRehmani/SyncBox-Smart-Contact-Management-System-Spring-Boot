@@ -8,8 +8,7 @@ import com.syncbox.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,25 +37,37 @@ public class PageController {
     }
 
     @RequestMapping("/")
-    public  String home(){
+    public  String home(Authentication authentication){
+        if(authentication != null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("Home Controller");
         return "home";
     }
 
     @RequestMapping("/about")
-    public  String about(){
+    public  String about(Authentication authentication){
+        if(authentication != null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("About Controller");
         return "about";
     }
 
     @RequestMapping("/services")
-    public  String services(){
+    public  String services(Authentication authentication){
+        if(authentication!= null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("About Controller");
         return "services";
     }
 
     @RequestMapping("/contact-us")
-    public  String contactUs(){
+    public  String contactUs(Authentication authentication){
+        if(authentication!= null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("About Controller");
         return "contact";
     }
@@ -64,13 +75,19 @@ public class PageController {
 
 
     @GetMapping("/sign-in")
-    public  String login(){
+    public  String login(Authentication authentication){
+        if(authentication!= null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("Login Controller");
         return "login";
     }
 
     @RequestMapping("/sign-up")
-    public  String register(Model model){
+    public  String register(Model model, Authentication authentication){
+        if(authentication!= null) {
+            return "redirect:/user/dashboard";
+        }
         System.out.println("Register Controller");
 
         UserDto userDto = new UserDto();
@@ -97,14 +114,18 @@ public class PageController {
 //        Save to Database
         User user2 = this.userService.saveUser(user);
         session.setAttribute("email", user2.getEmail());
-        Message message = new Message("Registration Successfully.", MessageType.purple);
+        Message message = new Message("Registration Successfully. Please Verify Your Email", MessageType.purple);
         session.setAttribute("message",message);
-        return "redirect:/sign-up";
+        return "redirect:/verify-email";
     }
 
     @GetMapping("/verify-email")
-    public String verifyEmail(@RequestParam(required = false) String token, String opt,HttpSession session){
+    public String verifyEmail(@RequestParam(required = false) String token, Authentication authentication, HttpSession session, Model model){
+        if(authentication!= null) {
+            return "redirect:/user/dashboard";
+        }
         String email = (String) session.getAttribute("email");
+        model.addAttribute("email", email);
         if(email == null || email.isEmpty()){
             return "error-page";
         }
@@ -118,12 +139,13 @@ public class PageController {
                 message = new Message("Email verification failed.", MessageType.red);
             }
             session.setAttribute("message",message);
+            return "redirect:/sign-in";
         }
         return "/otpVerification";
     }
 
     @PostMapping("/verify-email")
-    public String verifyOTP(@RequestBody Map<String, String> payload, HttpSession session) {
+    public String verifyOTP(@RequestBody Map<String, String> payload, HttpSession session) throws Exception {
         String otp = payload.get("otp");
         System.out.println(otp);
         String email = (String) session.getAttribute("email");
@@ -136,11 +158,14 @@ public class PageController {
         if(isVerified){
             message = new Message("Email verified successfully. You can now Sign-in", MessageType.green);
             session.removeAttribute("email");
+            session.setAttribute("message",message);
+            return "redirect:/sign-in";
         }else{
             message = new Message("Email verification failed.", MessageType.red);
+            session.setAttribute("message",message);
+           throw new Exception("Verification failed due to invalid OTP");
         }
-        session.setAttribute("message",message);
-        return "redirect:/sign-in";
-    }
 
+
+    }
 }
