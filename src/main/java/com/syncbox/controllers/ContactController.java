@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Retention;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -104,6 +105,22 @@ public class ContactController {
         model.addAttribute("pageContacts", this.contactService.getContactsByUser(user,page,size,sortBy,direction));
         this.logger.info("Contact List View.");
         return "user/contacts";
+    }
+
+    @GetMapping("search")
+    public String searchContacts(
+            @RequestParam(value = "query", defaultValue = "") String query,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Authentication authentication,Model model){
+        this.logger.info("Search Contact Handler with query {}.",query);
+        String email = AuthenticatedUserHelper.getAuthenticatedEmail(authentication);
+        User user = this.userService.getUserByEmail(email);
+        model.addAttribute("pageContacts", this.contactService.searchContactsByUser(user, query, page, size, sortBy, direction));
+        model.addAttribute("query", query);
+        return  "user/search-contacts";
     }
 
 //  Mark Contact As Favourite handler

@@ -39,6 +39,6 @@ public interface ContactRepository extends JpaRepository<Contact, String> {
             "LOWER(c.email) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(c.phoneNumber) LIKE LOWER(CONCAT('%', :query, '%'))) AND c.user = :user"
     )
-    List<Contact> searchContactsByUser(@Param("query") String query, @Param("user") User user);
+    Page<Contact> searchContactsByUser(@Param("query") String query, @Param("user") User user, Pageable pageable);
 
 }

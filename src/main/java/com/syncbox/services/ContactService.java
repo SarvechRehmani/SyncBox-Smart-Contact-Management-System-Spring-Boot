@@ -32,7 +32,7 @@ public interface ContactService {
 
     List<Contact> getContactsByUser(String userId);
 
-    List<Contact> searchContactsByUser(String query, User user);
+    Page<Contact> searchContactsByUser(User user, String query, int page, int size, String sortBy, String sortDirection);
 
 
 }

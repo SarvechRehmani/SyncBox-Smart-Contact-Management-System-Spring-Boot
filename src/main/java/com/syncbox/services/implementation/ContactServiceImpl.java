@@ -87,7 +87,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> searchContactsByUser(String query, User user) {
-        return this.contactRepository.searchContactsByUser(query, user);
+    public Page<Contact> searchContactsByUser(User user, String query, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = sortDirection.equals("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return this.contactRepository.searchContactsByUser(query, user, pageable);
     }
+
+
 }
