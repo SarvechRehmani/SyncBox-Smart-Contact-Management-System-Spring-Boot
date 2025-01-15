@@ -22,6 +22,6 @@ public class AppConstants {
     public static final String DEFAULT_CLOUDINARY_PUBLIC_ID_FOR_CONTACT = "Default_eqbncs";
 
 
-    public static  final String PAGE_SIZE = "10";
+    public static  final String PAGE_SIZE = "5";
 
 }
